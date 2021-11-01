@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            :root
+            {
+                --preview-width: min(90vw, 640px);
+                --preview-height: calc(var(--preview-width) * 0.5);
+            }
+            html
+            {
+                margin: 0;
+                padding: 0;
+            }
+            body
+            {
+                margin: 0;
+                padding: 0;
+            }
+            
+            #container
+            {
+                margin-left: auto;
+                margin-right: auto;
+                width: var(--preview-width);
+                height: var(--preview-height);
+                border: 2mm solid rgb(124, 178, 209);
+                background-color: aqua;
+            }
+            
+            #exercise-container
+            {
+                flex: 0.8;
+            }
+            
+            #title-wrapper
+            {
+                flex: 0.2;
+                background-color: green;                
+            }
+            
+            #title
+            {
+                --title-width: var(--preview-height);
+                --title-height: calc(var(--preview-width) / 9);
+                --tx: calc(var(--preview-width) * -0.25);
+                --ty: calc(var(--title-height) * 0.5);
+                font-family: 'Comic Neue';
+                font-weight: 700;
+                display: flex;
+                color: #7cb2d1;
+                align-content: center;
+                align-items: center;
+                justify-content: center;
+                width: var(--preview-height);
+                height: calc(var(--preview-width) / 9);
+                font-size: 40px;/*calc(var(--preview-width) * 0.0548765431961);*/
+                transform: translate(var(--tx), calc(var(--ty) * -1)) rotate(-90deg) translate(var(--tx), var(--ty));
+            }
+        </style>
+        
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+        <script src="js/ComicNeue-bold.js"></script>
+    </head>
+    
+    <body>
+        <div>
+            <h1>Editor</h1>
+            <label for="titleInput">Titel:</label>
+            <input id="titleInput" oninput="updateTitle()" value="kraak de code">
+            <button onclick="generatePDF()">Opslaan</button>
+        </div>
+        <page id="page">
+            <div id="container">
+                <div id="title">kraak de code</div>
+                <div id="exercise-container">
+                </div>
+            </div>
+        </page>
+        
+
+        <script>
+            const titleElement = document.getElementById("title");
+            const titleInputElement = document.getElementById("titleInput");
+            
+            function updateTitle()
+            {
+                titleElement.innerHTML = titleInputElement.value;    
+                
+            }
+            
+            function drawBackground(doc)
+            {
+                doc.setLineWidth(2);
+                doc.setDrawColor(124, 178, 209);
+                doc.setFillColor(0, 255, 255);
+                doc.rect(15, 15, 180, 90, "DF");
+            }
+            
+            function getTitleWidth(doc, titleLines)
+            {
+                console.log(titleLines);
+                
+                if (!Array.isArray(titleLines))
+                    return doc.getTextWidth(doc, titleLines);
+                
+                let result = 0;
+                
+                titleLines.forEach((value) => { result = Math.max(result, doc.getTextWidth(value)); });
+
+                return result;
+            }
+            
+            function drawTitle(doc)
+            {                
+                doc.setFontSize(24);
+                doc.setFont("ComicNeue-Bold", "bold");
+                doc.setTextColor(124, 178, 209);
+                
+                const title = titleInputElement.value;
+                const titleDimensions = doc.getTextDimensions(title);
+                
+                doc.text(title, 25 + titleDimensions.h * 0.5, 60 + titleDimensions.w * 0.5, { angle: 90 }, null, "center");
+                /*const title = titleInputElement.value;
+                const titleSplit = doc.splitTextToSize(title, 90);
+                const titleWidth = getTitleWidth(doc, titleSplit);
+                
+                doc.text(titleSplit, 25, 60 + titleWidth * 0.5, { angle: 90 }, null, "center");*/
+            }
+			function generatePDF() 
+            {
+                window.jsPDF = window.jspdf.jsPDF;
+                
+                const doc = new jsPDF();
+                
+                addComicNeue(doc);
+                
+                
+                
+                drawBackground(doc);
+                drawTitle(doc);
+                                
+                doc.save("result.pdf");
+			}
+		</script>
+    </body>
+</html>
