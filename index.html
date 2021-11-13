@@ -2,9 +2,22 @@
 <html lang="nl">
     <head>
         <title>Kraak de Code</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <!-- meta settings -->
+        <meta charset="utf-8">        
+        <meta name="mobileoptimized" content="true">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="theme-color" content="#8cd5ff">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        
         <link rel="manifest" href="manifest.json">
         <link rel="icon" type="image/png" href="icons/icon-32.png">
+        
+        <!-- icons inclusion -->
+        <link rel="shortcut icon" type="image/png" sizes="512x512" href="icons/icon-512.png">
+        <link rel="apple-touch-icon" type="image/png" sizes="512x512" href="icons/icon-512.png">
 
         <style>
             @font-face {
@@ -320,6 +333,18 @@
                 saveButton.enabled = false;
                 doc.save("result.pdf");
             }
+            
+            (function () {
+                "use strict";
+
+                if ('serviceWorker' in navigator) {
+                    navigator.serviceWorker.register("sw.js").then(function (registration) {
+                        console.log('the service worker has been registered: ', registration);
+                    }).catch(function (error) {
+                        console.log('the service worker could not be registered', error);
+                    });
+                }
+            }());
 		</script>
     </body>
 </html>
