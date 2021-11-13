@@ -172,7 +172,7 @@
                 </div>
             </div>
             
-            <button id = "save-button" onclick="generatePDF()">Opslaan</button>
+            <button id = "save-button" onclick="savePdf()">Opslaan</button>
         </div>
         <div id= "preview-container">
             <canvas id = "preview">
@@ -193,6 +193,7 @@
             const image2 = new Image();
             const image3 = new Image();
             const saveButton = document.getElementById("save-button");
+            let jsPdfScript = null;
             image1.onload = () => { updateCanvas(); }
             image2.onload = () => { updateCanvas(); }
             image3.onload = () => { updateCanvas(); }
@@ -229,6 +230,8 @@
             backgroundColor.onchange = () => { updateCanvas(); }
             accentColor.oninput = () => { updateCanvas() };
             accentColor.onchange = () => { updateCanvas(); }
+            window.addEventListener('resize', updateCanvas);
+            window.addEventListener('load', updateCanvas);
             
             function getBullet(bullet)
             {
@@ -259,11 +262,27 @@
                 drawPreview(canvasDrawer, exerciseData());
             }
             
-            window.addEventListener('resize', updateCanvas);
-            window.addEventListener('load', updateCanvas);
+            function loadJsPdf(callback)
+            {
+                if (jsPdfScript)
+                {
+                    callback();
+                    return;
+                }
+                
+                jsPdfScript = document.createElement("script");
+                jsPdfScript.onload = () => { callback() };
+                jsPdfScript.setAttribute('type', 'text/javascript');
+                jsPdfScript.setAttribute("src", "js/jspdf.js");
+                document.body.appendChild(jsPdfScript);
+            }
             
+            function savePdf()
+            {
+                loadJsPdf(generatePdf);
+            }
             
-            function generatePDF()
+            function generatePdf()
             {
                 const doc = new window.jspdf.jsPDF({
                     orientation: 'p',
