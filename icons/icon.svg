@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg width="64" height="64" version="1.1" viewBox="0 0 16.933 16.933" xmlns="http://www.w3.org/2000/svg">
+ <g>
+  <path transform="scale(.26458)" d="m32 0a18 18 0 0 0-18 18 18 18 0 0 0 18 18 18 18 0 0 0 18-18 18 18 0 0 0-18-18zm0 3a15 15 0 0 1 15 15 15 15 0 0 1-15 15 15 15 0 0 1-15-15 15 15 0 0 1 15-15z" fill="#788f9b" stroke-width=".83045"/>
+  <path transform="scale(.26458)" d="m32 3a15 15 0 0 0-15 15 15 15 0 0 0 15 15 15 15 0 0 0 15-15 15 15 0 0 0-15-15zm0 3a12 12 0 0 1 12 12 12 12 0 0 1-12 12 12 12 0 0 1-12-12 12 12 0 0 1 12-12z" fill="#546e7a" stroke-width=".69204"/>
+  <g transform="rotate(-45 8.4667 10.583)">
+   <circle cx="8.4667" cy="10.583" r="6.35" fill="#788f9b" stroke-width=".29296"/>
+   <path d="m2.1167 10.583a6.35 6.35 0 0 0 6.35 6.35 6.35 6.35 0 0 0 6.35-6.35z" fill="#546e7a" stroke-width=".29296"/>
+  </g>
+  <rect x="-5.4688" y="5.2318" width="2.9365" height=".12044" fill="#fff" stroke-width=".26458"/>
+  <circle cx="8.4667" cy="10.583" r="4.7625" fill="#dff3fd" stroke-width=".33252"/>
+  <circle transform="scale(-1,1)" cx="-8.4667" cy="10.583" r="3.7042" fill="#28b5f5" stroke-width=".49535"/>
+  <circle cx="8.4667" cy="10.583" r="1.5875" fill="#0287cf" stroke-width=".28726"/>
+  <g fill="#dff3fd" stroke-width=".43996">
+   <rect x="7.9375" y="6.35" width="1.0583" height="1.5875"/>
+   <rect transform="rotate(90)" x="10.054" y="-5.8208" width="1.0583" height="1.5875"/>
+   <rect transform="rotate(90)" x="10.054" y="-12.7" width="1.0583" height="1.5875"/>
+   <rect x="7.9375" y="13.229" width="1.0583" height="1.5875"/>
+  </g>
+  <g transform="rotate(-45 8.4667 10.583)" fill="#dff3fd" stroke-width=".43996">
+   <rect x="7.9375" y="6.35" width="1.0583" height="1.5875"/>
+   <rect transform="rotate(90)" x="10.054" y="-5.8208" width="1.0583" height="1.5875"/>
+   <rect transform="rotate(90)" x="10.054" y="-12.7" width="1.0583" height="1.5875"/>
+   <rect x="7.9375" y="13.229" width="1.0583" height="1.5875"/>
+  </g>
+ </g>
+</svg>
