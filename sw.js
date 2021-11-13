@@ -1,16 +1,15 @@
 /*global self, caches, fetch*/
 /*version 1.0.0*/
 
-const CACHE_NAME = "offline-cache";
+const CACHE_NAME = "offline-kraak-de-code-cache";
 
 self.addEventListener('install', function (event) {
     "use strict";
     event.waitUntil(
         caches.open(CACHE_NAME).then(function (cache) {
             return cache.addAll([
-                '.',
                 './js/ComicNeue-bold.js',
-                './js/ComicNeue-Bold-bold',
+                './js/ComicNeue-Bold-bold.js',
                 './js/drawer.js',
                 './js/jspdf.umd.min.js',
                 './js/jspdf.umd.min.js.map',
@@ -27,7 +26,7 @@ self.addEventListener('install', function (event) {
                 './fonts/ComicNeue-Bold.woff2',
                 './index.html',
                 './manifest.json',
-                './sw.js',
+                './sw.js'
             ]);
         })
     );
