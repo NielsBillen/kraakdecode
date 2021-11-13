@@ -10,6 +10,13 @@
                 font-style: normal;
             }
             
+            @font-face {
+                font-family: ComicNeue-Regular;
+                src: url('fonts/ComicNeue-Regular.ttf') format('truetype');
+                font-weight: normal;
+                font-style: normal;
+            }
+            
             :root
             {
                 --preview-width: min(90vw, 640px);
@@ -24,61 +31,93 @@
             
             body
             {
-                margin: 1em;
+                margin: 0;
                 padding: 0;
                 background-color: grey;
+                display: flex;
+                flex-direction: row;
+                width: 100vw;
+                height: 100vh;
                 font-family: ComicNeue-Bold;
+            }
+            
+            #editor-panel
+            {
+                padding: 1rem;
+                background-color: white;  
+                display: flex;
+                flex-direction: column;              
+                overflow-y: auto;
+            }
+            
+            label
+            {
+                font-family: ComicNeue-Bold;
+                font-weight: bold;
+                font-size: 1rem;
+            }
+            
+            #inputs
+            {
+                display: flex;
+                flex-direction: column;
+                margin-left: 0.5rem;
+            }
+            
+            h1
+            {
+                margin-top: 0;
+                font-size: 2.5rem;
+            }
+            
+            #inputs > input
+            {
+                margin-bottom: 0.5rem;
+                margin-top: 0.25rem;
+                margin-left: 0.5rem;
+            }
+            
+            #titleInput
+            {
+                width: 128px;
+            }
+            
+            .input-row
+            {
+                margin-bottom: 0.5rem;
+                margin-top: 0.25rem;
+                margin-left: 0.5rem;
+                display: flex;
+                flex-direction: row;
+                gap: 0.5rem;
+            }
+            
+            #save-button
+            {
+                margin-top: 1rem;
+                align-self: flex-start;
+            }
+            
+            #preview-container
+            {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                padding: 1em;
+                align-content: center;
+                align-items: center;
+                justify-content: center;
             }
             
             #preview
             {
-                width: min(80vw, calc(80vh / 1.41421356237));
+                overflow: hidden;
+                flex: 1;
+                margin: 1rem;
                 background-color: white;
-                aspect-ratio: 1 / 1.41421356237;
+                aspect-ratio: 0.70710678118 / 1;
                 outline: 1px solid black;
             }
-            
-            #container
-            {
-                margin-left: auto;
-                margin-right: auto;
-                margin-top: 1em;
-                width: var(--preview-width);
-                height: var(--preview-height);
-                border: 2mm solid rgb(124, 178, 209);
-                background-color: aqua;
-            }
-            
-            #exercise-container
-            {
-                width: calc(var(--preview-width) * 8 / 9);
-                height: var(--preview-height);
-                border: 2mm solid rgb(124, 178, 209);
-            }
-            
-            #title-wrapper
-            {
-                background-color: green;                
-            }
-            
-            #title
-            {
-                --title-width: var(--preview-height);
-                --title-height: calc(var(--preview-width) / 9);
-                --tx: calc(var(--preview-width) * -0.25);
-                --ty: calc(var(--title-height) * 0.5);
-                font-family: 'ComicNeue-Bold';
-                display: flex;
-                color: #7cb2d1;
-                align-content: center;
-                align-items: center;
-                justify-content: center;
-                width: var(--preview-height);
-                height: calc(var(--preview-width) / 9);
-                font-size: 40px;/*calc(var(--preview-width) * 0.0548765431961);*/
-                transform: translate(var(--tx), calc(var(--ty) * -1)) rotate(-90deg) translate(var(--tx), var(--ty));
-            }
-            
         </style>
         
        
@@ -88,24 +127,136 @@
     </head>
     
     <body>
-        <div id = "editor">
+        <div id = "editor-panel">
             <h1>Editor</h1>
-            <label for="titleInput">Titel:</label>
-            <input id="titleInput" oninput="updateTitle()" value="kraak de code">
-            <button onclick="generatePDF()">Opslaan</button>
+            
+            <div id = "inputs">
+                <label for="titleInput">Titel:</label>
+                <input id="titleInput" oninput="updateCanvas()" value="kraak de code">
+
+                <label for="imageInput1">Afbeelding 1:</label>
+                <input id="imageInput1" type="file" accept="image/jpeg, image/png">
+
+                <label for="imageInput2">Afbeelding 2:</label>
+                <input id="imageInput2" type="file" accept="image/jpeg, image/png">
+
+                <label for="imageInput3">Afbeelding 3:</label>
+                <input id="imageInput3" type="file" accept="image/jpeg, image/png">
+                
+                <label>Bolletje 1:</label>
+                <div class = "input-row">
+                    <input id="bullet1_1" name = "bullet1" type="radio" checked>
+                    <input id="bullet1_2" name = "bullet1" type="radio">
+                    <input id="bullet1_3" name = "bullet1" type="radio">
+                </div>
+                
+                <label>Bolletje 2:</label>
+                <div class = "input-row">
+                    <input id="bullet2_1" name = "bullet2" type="radio">
+                    <input id="bullet2_2" name = "bullet2" type="radio" checked>
+                    <input id="bullet2_3" name = "bullet2" type="radio">
+                </div>
+                
+                <label>Bolletje 3:</label>
+                <div class = "input-row">
+                    <input id="bullet3_1" name = "bullet3" type="radio">
+                    <input id="bullet3_2" name = "bullet3" type="radio">
+                    <input id="bullet3_3" name = "bullet3" type="radio" checked>
+                </div>
+                
+                <label for="borderColor">Kleuren:</label>
+                <div class = "input-row">
+                    <input id="borderColor" type="color" value = "#000000">
+                    <input id="backgroundColor" type="color" value = "#ffffff">
+                    <input id="accentColor" type="color" value = "#8cd5ff">
+                </div>
+            </div>
+            
+            <button id = "save-button" onclick="generatePDF()">Opslaan</button>
         </div>
-        <canvas id = "preview">
-        </canvas>
+        <div id= "preview-container">
+            <canvas id = "preview">
+            </canvas>
+        </div>
+
 
         <script>
             const canvas = document.getElementById("preview"); 
-            window.jsPDF = window.jspdf.jsPDF;
-            window.Matrix = window.jspdf.Matrix;
-
+            const titleInput = document.getElementById("titleInput");
+            const imageInput1 = document.getElementById("imageInput1");
+            const imageInput2 = document.getElementById("imageInput2");
+            const imageInput3 = document.getElementById("imageInput3");
+            const borderColor = document.getElementById("borderColor");
+            const backgroundColor = document.getElementById("backgroundColor");
+            const accentColor = document.getElementById("accentColor");
+            const image1 = new Image();
+            const image2 = new Image();
+            const image3 = new Image();
+            const saveButton = document.getElementById("save-button");
+            image1.onload = () => { updateCanvas(); }
+            image2.onload = () => { updateCanvas(); }
+            image3.onload = () => { updateCanvas(); }
+            
+            function updateImageFunction(image)
+            {
+                return (e) => {
+                    if (image.src)
+                        URL.revokeObjectURL(image.src);
+                    const url = URL.createObjectURL(e.target.files[0]);
+                    image.src = url;
+                }
+            }
+            
+            function connectToBullet(bullet)
+            {
+                for(let i = 1; i <= 3; i += 1)
+                {
+                    const bulletElement = document.getElementById("bullet" + bullet + "_" + i);
+                    bulletElement.onchange = () => { updateCanvas() };
+                }
+            }
+            
+            connectToBullet(1);
+            connectToBullet(2);
+            connectToBullet(3);
+            
+            imageInput1.onchange = updateImageFunction(image1);
+            imageInput2.onchange = updateImageFunction(image2);
+            imageInput3.onchange = updateImageFunction(image3);
+            borderColor.oninput = () => { updateCanvas() };
+            borderColor.onchange = () => { updateCanvas(); }
+            backgroundColor.oninput = () => { updateCanvas() };
+            backgroundColor.onchange = () => { updateCanvas(); }
+            accentColor.oninput = () => { updateCanvas() };
+            accentColor.onchange = () => { updateCanvas(); }
+            
+            function getBullet(bullet)
+            {
+                for(let i = 1; i <= 3; i += 1)
+                {
+                    const bulletElement = document.getElementById("bullet" + bullet + "_" + i);
+                    if (bulletElement.checked)
+                        return i;
+                }
+                return 0;
+            }
+            
+            function exerciseData()
+            {
+                return { 
+                    "title": titleInput.value, 
+                    "images": [ image1, image2, image3 ], 
+                    "bullets": [ getBullet(1), getBullet(2), getBullet(3) ],
+                    "borderColor": borderColor.value,
+                    "backgroundColor": backgroundColor.value,
+                    "accentColor": accentColor.value
+                };
+            }
+            
             function updateCanvas()
             {
                 const canvasDrawer = new CanvasDrawer(canvas);
-                drawPreview(canvasDrawer);
+                drawPreview(canvasDrawer, exerciseData());
             }
             
             window.addEventListener('resize', updateCanvas);
@@ -114,7 +265,7 @@
             
             function generatePDF()
             {
-                const doc = new jsPDF({
+                const doc = new window.jspdf.jsPDF({
                     orientation: 'p',
                     unit: 'mm',
                     format: 'a4',
@@ -123,103 +274,11 @@
                 addComicNeue(doc);
                 
                 const pdfDrawer = new PDFDrawer(doc);
-                drawPreview(pdfDrawer);
-                                
+                drawPreview(pdfDrawer, exerciseData());
+                
+                saveButton.enabled = false;
                 doc.save("result.pdf");
-                
             }
-            /*function drawPreview()
-            {
-                const canvas = document.getElementById("preview");
-                const context = canvas.getContext("2d");
-            
-                context.save();
-                //context.translate(0.5, 0.5);
-                
-                drawPreviewBackground(context, canvas.width, canvas.height);
-                
-                context.restore();
-            }
-            
-            function drawPreviewBackground(context, width, height)
-            {
-                context.lineWidth = 2;
-                context.strokeStyle = "#7cb2d1"
-                context.clearRect(0, 0, width, height);
-                context.fillStyle = "aqua";
-                context.fillRect(0, 0, width, height);
-                context.strokeRect(1, 1, width - 2, height - 2);
-            }
-            
-            function drawPreviewRectangle(x, y, width, height, context)
-            {
-                
-            }
-            
-            drawPreview();
-            
-            const titleElement = document.getElementById("title");
-            const titleInputElement = document.getElementById("titleInput");
-            
-            function updateTitle()
-            {
-                titleElement.innerHTML = titleInputElement.value;    
-                
-            }
-            
-            function drawBackground(doc)
-            {
-                doc.setLineWidth(2);
-                doc.setDrawColor(124, 178, 209);
-                doc.setFillColor(0, 255, 255);
-                doc.rect(15, 15, 180, 90, "DF");
-            }
-            
-            function getTitleWidth(doc, titleLines)
-            {
-                console.log(titleLines);
-                
-                if (!Array.isArray(titleLines))
-                    return doc.getTextWidth(doc, titleLines);
-                
-                let result = 0;
-                
-                titleLines.forEach((value) => { result = Math.max(result, doc.getTextWidth(value)); });
-
-                return result;
-            }
-            
-            function drawTitle(doc)
-            {                
-                doc.setFontSize(24);
-                doc.setFont("ComicNeue-Bold", "bold");
-                doc.setTextColor(124, 178, 209);
-                
-                const title = titleInputElement.value;
-                const titleDimensions = doc.getTextDimensions(title);
-                
-                doc.text(title, 25 + titleDimensions.h * 0.5, 60 + titleDimensions.w * 0.5, { angle: 90 }, null, "center");
-                /*const title = titleInputElement.value;
-                const titleSplit = doc.splitTextToSize(title, 90);
-                const titleWidth = getTitleWidth(doc, titleSplit);
-                
-                doc.text(titleSplit, 25, 60 + titleWidth * 0.5, { angle: 90 }, null, "center");
-            }
-			function generatePDF() 
-            {
-                window.jsPDF = window.jspdf.jsPDF;
-                
-                const doc = new jsPDF();
-                
-                addComicNeue(doc);
-                
-                
-                
-                drawBackground(doc);
-                drawTitle(doc);
-                                
-                doc.save("result.pdf");
-			}*/
 		</script>
     </body>
 </html>
