@@ -3,37 +3,37 @@
 	"name": "Kraak de Code",
 	"description": "Maak eenvoudig logopedische oefeningen.",
 	"icons": [{
-			"src": "/images/icon.svg",
+			"src": "icons/icon.svg",
 			"type": "image/svg+xml",
-			"sizes": "512x512"
+			"sizes": "64x64"
 		},
 		{
-			"src": "/images/icon-1024.png",
+			"src": "icons/icon-1024.png",
 			"type": "image/png",
 			"sizes": "1024x1024"
 		},
 		{
-			"src": "/images/icons-512.png",
+			"src": "icons/icon-512.png",
 			"type": "image/png",
 			"sizes": "512x512"
 		},
 		{
-			"src": "/images/icons-256.png",
+			"src": "icons/icon-256.png",
 			"type": "image/png",
 			"sizes": "256x256"
 		},
 		{
-			"src": "/images/icons-128.png",
+			"src": "icons/icon-128.png",
 			"type": "image/png",
 			"sizes": "128x128"
 		},
 		{
-			"src": "/images/icons-64.png",
+			"src": "icons/icon-64.png",
 			"type": "image/png",
 			"sizes": "64x64"
 		},
 		{
-			"src": "/images/icons-32.png",
+			"src": "icons/icon-32.png",
 			"type": "image/png",
 			"sizes": "32x32"
 		}
