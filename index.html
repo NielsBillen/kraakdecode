@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="nl">
     <head>
         <title>Kraak de Code</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        
+        <link rel="manifest" href="/manifest.json">
+
         <style>
             @font-face {
                 font-family: ComicNeue-Bold;
@@ -122,7 +123,7 @@
             }
             
             
-            @media (max-aspect-ratio: 8/7)
+            @media (max-aspect-ratio: 10/9)
             {
                 body 
                 {
@@ -193,7 +194,7 @@
             </div>
             
             <button id = "save-button" onclick="savePdf()">Opslaan</button>
-                    </div>
+        </div>
         <div id= "preview-container">
             <canvas id = "preview">
             </canvas>
