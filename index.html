@@ -119,23 +119,19 @@
                 flex: 1;
                 flex-direction: column;
                 display: flex;
-                padding: 1em;
                 align-content: center;
                 align-items: center;
                 justify-content: center;
                 overflow: auto;
+                padding: 1rem;
             }
             
             #preview
             {
                 overflow: hidden;
-                flex: 1;
-                margin: 1rem;
                 background-color: white;
-                aspect-ratio: 0.70710678118 / 1;
                 outline: 1px solid black;
             }
-            
             
             @media (max-aspect-ratio: 10/9)
             {
@@ -216,6 +212,7 @@
 
 
         <script>
+            const container = document.getElementById("preview-container");
             const canvas = document.getElementById("preview"); 
             const titleInput = document.getElementById("titleInput");
             const imageInput1 = document.getElementById("imageInput1");
@@ -291,8 +288,28 @@
                 };
             }
             
+            function resizeCanvas()
+            {
+                const w = container.clientWidth;
+                const h = container.clientHeight;
+                const ratio = w / h;
+                
+                if (ratio > 0.70710678118)
+                {
+                    canvas.height = h;
+                    canvas.width = h * 0.70710678118;
+                }
+                else
+                {
+                    canvas.width = w;
+                    canvas.height = w * 0.70710678118;
+                }                
+            }
+            
             function updateCanvas()
             {
+                resizeCanvas();
+                
                 const canvasDrawer = new CanvasDrawer(canvas);
                 drawPreview(canvasDrawer, exerciseData());
             }
