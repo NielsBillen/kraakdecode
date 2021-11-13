@@ -51,9 +51,9 @@
             "purpose": "any"
 		}
 	],
-	"start_url": "/",
+	"start_url": "/kraakdecode",
 	"background_color": "#8CD5FF",
 	"display": "standalone",
-	"scope": "/",
+	"scope": "/kraakdecode",
 	"theme_color": "#3367D6"
 }
