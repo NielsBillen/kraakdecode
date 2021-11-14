@@ -288,11 +288,26 @@
                 };
             }
             
+            function containerSize()
+            {
+            	const computedStyle = getComputedStyle(container);
+
+		let width = container.clientWidth // width with padding
+		let height = container.clientHeight // height with padding
+
+		height -= parseFloat(computedStyle.paddingTop) + parseFloat(computedStyle.paddingBottom)
+		width -= parseFloat(computedStyle.paddingLeft) + parseFloat(computedStyle.paddingRight)
+		return { "width": width, "height": height };
+            }
+            
             function resizeCanvas()
             {
-                const w = container.clientWidth;
-                const h = container.clientHeight;
+            	const size = containerSize();
+                const w = size.width;
+                const h = size.height;
                 const ratio = w / h;
+                
+                console.log(ratio);
                 
                 if (ratio > 0.70710678118)
                 {
@@ -302,7 +317,7 @@
                 else
                 {
                     canvas.width = w;
-                    canvas.height = w * 0.70710678118;
+                    canvas.height = w / 0.70710678118;
                 }                
             }
             
