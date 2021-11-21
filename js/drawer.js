@@ -296,7 +296,7 @@ class PDFDrawer extends Drawer
     }
 }
 
-function drawPreview(drawer, exerciseData)
+function drawPreview(drawer, exerciseData1, exerciseData2)
 {
     const aspectRatio = 1.41421356237;
     const margin = 0.05;
@@ -321,43 +321,53 @@ function drawPreview(drawer, exerciseData)
     const textBoxHeight = imageBoxHeight;
     
     drawer.clear();
-    drawer.drawRectangle(margin, margin, outerWidth, outerHeight, 0.01, exerciseData.borderColor, exerciseData.backgroundColor);
-    drawer.drawVerticalText(exerciseData.title, margin + titleWidth * 0.5, margin + outerHeight * 0.5, "ComicNeue-Bold", 24, exerciseData.borderColor);
     
-    // image rectangle
-    drawer.drawRoundedRectangle(innerX, innerY, innerWidth, innerHeight, 0.05, 0.01, exerciseData.borderColor, exerciseData.accentColor);
-    for(let i = 0; i < 3; i += 1)
+    const drawFunction = (yOffset, exerciseData) => 
     {
-        // draw the box
-        const imageBoxX = textBoxLeftMargin + i * (imageSeperation + imageBoxWidth);
-        drawer.drawRoundedRectangle(imageBoxX, imageBoxY, imageBoxWidth, imageBoxHeight, 0.03, 0.01, exerciseData.borderColor, "white");
+        if (!exerciseData.enabled)
+            return;
         
-        
-        // draw the image
-        const imageX = imageBoxX + imageInset;
-        const imageWidth = imageBoxWidth - 2 * imageInset;
-        const imageHeight = imageWidth * 0.9;
-        const imageY = imageBoxY + imageBoxHeight - imageHeight - imageInset;
-        drawer.drawImage(exerciseData.images[i], imageX, imageY, imageWidth, imageHeight);
+        drawer.drawRectangle(margin, yOffset + margin, outerWidth, outerHeight, 0.01, exerciseData.borderColor, exerciseData.backgroundColor);
+        drawer.drawVerticalText(exerciseData.title, margin + titleWidth * 0.5, yOffset + margin + outerHeight * 0.5, "ComicNeue-Bold", 24, exerciseData.borderColor);
 
-        const circleRadius = (imageY - imageBoxY) * 0.25;
-        const circleY = (imageBoxY + imageY) * 0.5;
-                          
-        // draw the circles
-        for(let j = 0; j < 3; j += 1)
+        // image rectangle
+        drawer.drawRoundedRectangle(innerX, yOffset + innerY, innerWidth, innerHeight, 0.05, 0.01, exerciseData.borderColor, exerciseData.accentColor);
+        for(let i = 0; i < 3; i += 1)
         {
-            const bulletSelected = exerciseData.bullets[i] == (j + 1); 
-            const circleX = imageBoxX + imageBoxWidth * 0.5 + (j - 1) * circleRadius * 3;
-            drawer.drawCircle(circleX, circleY, circleRadius, 0.01, exerciseData.borderColor, (bulletSelected ? exerciseData.accentColor : "white"));
-        }
-    }
+            // draw the box
+            const imageBoxX = textBoxLeftMargin + i * (imageSeperation + imageBoxWidth);
+            drawer.drawRoundedRectangle(imageBoxX, yOffset + imageBoxY, imageBoxWidth, imageBoxHeight, 0.03, 0.01, exerciseData.borderColor, "white");
 
+
+            // draw the image
+            const imageX = imageBoxX + imageInset;
+            const imageWidth = imageBoxWidth - 2 * imageInset;
+            const imageHeight = imageWidth * 0.9;
+            const imageY = imageBoxY + imageBoxHeight - imageHeight - imageInset;
+            drawer.drawImage(exerciseData.images[i], imageX, yOffset + imageY, imageWidth, imageHeight);
+
+            const circleRadius = (imageY - imageBoxY) * 0.25;
+            const circleY = yOffset + (imageBoxY + imageY) * 0.5;
+
+            // draw the circles
+            for(let j = 0; j < 3; j += 1)
+            {
+                const bulletSelected = exerciseData.bullets[i] == (j + 1); 
+                const circleX = imageBoxX + imageBoxWidth * 0.5 + (j - 1) * circleRadius * 3;
+                drawer.drawCircle(circleX, circleY, circleRadius, 0.01, exerciseData.borderColor, (bulletSelected ? exerciseData.accentColor : "white"));
+            }
+        }
+
+
+        // text field
+        drawer.drawRoundedRectangle(textBoxLeftMargin, yOffset + textBoxTopMargin, textBoxWidth, imageBoxHeight, 0.025, 0.01, exerciseData.borderColor, "white");
+        drawer.drawRectangle(textBoxLeftMargin + 0.0225, yOffset + textBoxTopMargin + textBoxHeight * 0.5 - 0.02, textBoxWidth - 0.045, 0.0025, 0, exerciseData.accentColor, exerciseData.accentColor);
+        drawer.drawRectangle(textBoxLeftMargin + 0.0225, yOffset + textBoxTopMargin + textBoxHeight * 0.5 + 0.02, textBoxWidth - 0.045, 0.0025, 0, exerciseData.borderColor, exerciseData.borderColor);
+        drawer.drawRectangle(textBoxLeftMargin + 0.02, yOffset + textBoxTopMargin + 0.02, textBoxWidth - 0.04, textBoxHeight - 0.04, 0.005, exerciseData.accentColor, null);
+        drawer.drawRectangle(textBoxLeftMargin + 0.02, yOffset + textBoxTopMargin + 0.02, textBoxWidth - 0.04, textBoxHeight * 0.15, 0.005, exerciseData.accentColor, exerciseData.accentColor);
+        drawer.drawRectangle(textBoxLeftMargin + 0.02, yOffset + textBoxTopMargin - 0.02 + textBoxHeight * 0.85, textBoxWidth - 0.04, textBoxHeight * 0.15, 0.005, exerciseData.accentColor, exerciseData.accentColor);    
+    }
     
-    // text field
-    drawer.drawRoundedRectangle(textBoxLeftMargin, textBoxTopMargin, textBoxWidth, imageBoxHeight, 0.025, 0.01, exerciseData.borderColor, "white");
-    drawer.drawRectangle(textBoxLeftMargin + 0.0225, textBoxTopMargin + textBoxHeight * 0.5 - 0.02, textBoxWidth - 0.045, 0.0025, 0, exerciseData.accentColor, exerciseData.accentColor);
-    drawer.drawRectangle(textBoxLeftMargin + 0.0225, textBoxTopMargin + textBoxHeight * 0.5 + 0.02, textBoxWidth - 0.045, 0.0025, 0, exerciseData.borderColor, exerciseData.borderColor);
-    drawer.drawRectangle(textBoxLeftMargin + 0.02, textBoxTopMargin + 0.02, textBoxWidth - 0.04, textBoxHeight - 0.04, 0.005, exerciseData.accentColor, null);
-    drawer.drawRectangle(textBoxLeftMargin + 0.02, textBoxTopMargin + 0.02, textBoxWidth - 0.04, textBoxHeight * 0.15, 0.005, exerciseData.accentColor, exerciseData.accentColor);
-    drawer.drawRectangle(textBoxLeftMargin + 0.02, textBoxTopMargin - 0.02 + textBoxHeight * 0.85, textBoxWidth - 0.04, textBoxHeight * 0.15, 0.005, exerciseData.accentColor, exerciseData.accentColor);    
+    drawFunction(0, exerciseData1);
+    drawFunction(aspectRatio - margin * 2 - outerHeight, exerciseData2);
 }

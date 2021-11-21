@@ -38,17 +38,8 @@
                 font-style: normal;
             }
             
-            /*@font-face {
-                font-family: OpenSans-Medium;
-                src: url('fonts/OpenSans-Medium.woff2') format('woff2'),
-                     url('fonts/OpenSans-Medium.woff') format('woff'),
-                     url('fonts/OpenSans-Medium.ttf') format('truetype');
-                font-weight: medium;
-                font-style: normal;
-            }*/
-            
             @font-face {
-                font-family: OpenSans-Medium;
+                font-family: OpenSans-Bold;
                 src: 
                      url('fonts/OpenSans-Bold.ttf') format('truetype');
                 font-weight: bold;
@@ -104,16 +95,17 @@
                 grid-row-gap: 0.5rem;
                 grid-column-gap: 0.5rem;
                 align-items: center;
+                margin-left: 0.5rem;
             }
             
-            .input > p
+            .inputs > p
             {
                 margin: 0;
             }
             
             h1
             {
-                margin-top: 0;
+                margin: 0;
                 font-size: 2.5rem;
                 font-family: ComicNeue-Bold;
                 text-transform: uppercase;
@@ -121,10 +113,10 @@
             
             h2
             {
-                margin-top: 0;
+                margin-top: 2rem;
                 font-size: 1.5rem;
-                font-family: OpenSans-Medium;
-                margin-bottom: 0.25rem;
+                font-family: OpenSans-Bold;
+                margin-bottom: 1rem;
             }
             
             input[type=text]
@@ -134,10 +126,16 @@
                 height: 1.5rem;
                 font-family: OpenSans-Regular;
             }
+            
             input[type=text]:focus
             {
                 outline-width: 0;
                 border: 2px solid blue;
+            }
+            
+            input[type=checkbox]
+            {
+                margin-left: 0;
             }
             
             .input-row
@@ -154,13 +152,13 @@
                 gap: 0.5rem;
             }
             
-            #save-button
+            #saveButton
             {
                 margin-top: 1rem;
                 align-self: flex-start;
             }
             
-            #preview-container
+            #previewContainer
             {
                 flex: 1;
                 flex-direction: column;
@@ -223,7 +221,7 @@
                     flex: 1;
                 }
                 
-                #preview-container
+                #previewContainer
                 {
                     flex-direction: row;
                 }
@@ -237,78 +235,134 @@
     <body>
         <div id = "editor-panel">
             <h1>Editor</h1>
+
+            <button id = "saveButton" onclick="savePdf()">Opslaan</button>
             
             <h2>Oefening 1:</h2>
             
             <div class = "inputs">
+                <p>Aanwezig:</p>
+                <input id = "exercise1CheckBox" input type="checkbox" checked>
+                
                 <p>Titel:</p>
-                <input id="titleInput" type="text" oninput="updateCanvas()" value="kraak de code">
+                <input id="exercise1TitleInput" type="text" oninput="updateCanvas()" value="kraak de code">
 
                 <p>Afbeeldingen:</p>
                 <div class = "input-column">
-                    <label class = "upload-button" for="imageInput1">Upload</label>
-                    <input id="imageInput1" type="file" accept="image/jpeg, image/png" hidden>
-                    <label class = "upload-button" for="imageInput2">Upload</label>
-                    <input id="imageInput2" type="file" accept="image/jpeg, image/png" hidden>
-                    <label class = "upload-button" for="imageInput3">Upload</label>
-                    <input id="imageInput3" type="file" accept="image/jpeg, image/png" hidden>
+                    <label class = "upload-button" for="exercise1ImageInput1">Upload</label>
+                    <input id="exercise1ImageInput1" type="file" accept="image/jpeg, image/png" hidden>
+                    <label class = "upload-button" for="exercise1ImageInput2">Upload</label>
+                    <input id="exercise1ImageInput2" type="file" accept="image/jpeg, image/png" hidden>
+                    <label class = "upload-button" for="exercise1ImageInput3">Upload</label>
+                    <input id="exercise1ImageInput3" type="file" accept="image/jpeg, image/png" hidden>
                 </div>
                 
                 <p>Bolletjes:</p>
                 <div class = "input-column">
                     <div class = "input-row">
-                        <input id="bullet1_1" name = "bullet1" type="radio" checked>
-                        <input id="bullet1_2" name = "bullet1" type="radio">
-                        <input id="bullet1_3" name = "bullet1" type="radio">
+                        <input id="exercise1Bullet1-1" name = "exercise1Bullet1" type="radio" checked>
+                        <input id="exercise1Bullet1-2" name = "exercise1Bullet1" type="radio">
+                        <input id="exercise1Bullet1-3" name = "exercise1Bullet1" type="radio">
                     </div>
                     <div class = "input-row">
-                        <input id="bullet2_1" name = "bullet2" type="radio">
-                        <input id="bullet2_2" name = "bullet2" type="radio" checked>
-                        <input id="bullet2_3" name = "bullet2" type="radio">
+                        <input id="exercise1Bullet2-1" name = "exercise1Bullet2" type="radio">
+                        <input id="exercise1Bullet2-2" name = "exercise1Bullet2" type="radio" checked>
+                        <input id="exercise1Bullet2-3" name = "exercise1Bullet2" type="radio">
                     </div>
                     <div class = "input-row">
-                        <input id="bullet3_1" name = "bullet3" type="radio">
-                        <input id="bullet3_2" name = "bullet3" type="radio">
-                        <input id="bullet3_3" name = "bullet3" type="radio" checked>
+                        <input id="exercise1Bullet3-1" name = "exercise1Bullet3" type="radio">
+                        <input id="exercise1Bullet3-2" name = "exercise1Bullet3" type="radio">
+                        <input id="exercise1Bullet3-3" name = "exercise1Bullet3" type="radio" checked>
                     </div>
                 </div>
                 
                 <p>Kleuren:</p>
                 <div class = "input-row">
-                    <input id="borderColor" type="color" value = "#000000">
-                    <input id="backgroundColor" type="color" value = "#ffffff">
-                    <input id="accentColor" type="color" value = "#8cd5ff">
+                    <input id="exercise1BorderColor" type="color" value = "#000000">
+                    <input id="exercise1BackgroundColor" type="color" value = "#ffffff">
+                    <input id="exercise1AccentColor" type="color" value = "#8cd5ff">
                 </div>               
             </div>
             
             <h2>Oefening 2:</h2>
             
-            <button id = "save-button" onclick="savePdf()">Opslaan</button>
+            <div class = "inputs">
+                <p>Aanwezig:</p>
+                <input id = "exercise2CheckBox" input type="checkbox" checked>
+
+                <p>Titel:</p>
+                <input id="exercise2TitleInput" type="text" oninput="updateCanvas()" value="kraak de code">
+
+                
+                <p>Afbeeldingen:</p>
+                <div class = "input-column">
+                    <label class = "upload-button" for="exercise2ImageInput1">Upload</label>
+                    <input id="exercise2ImageInput1" type="file" accept="image/jpeg, image/png" hidden>
+                    <label class = "upload-button" for="exercise2ImageInput2">Upload</label>
+                    <input id="exercise2ImageInput2" type="file" accept="image/jpeg, image/png" hidden>
+                    <label class = "upload-button" for="exercise2ImageInput3">Upload</label>
+                    <input id="exercise2ImageInput3" type="file" accept="image/jpeg, image/png" hidden>
+                </div>
+                
+                <p>Bolletjes:</p>
+                <div class = "input-column">
+                    <div class = "input-row">
+                        <input id="exercise2Bullet1-1" name = "exercise2Bullet1" type="radio" checked>
+                        <input id="exercise2Bullet1-2" name = "exercise2Bullet1" type="radio">
+                        <input id="exercise2Bullet1-3" name = "exercise2Bullet1" type="radio">
+                    </div>
+                    <div class = "input-row">
+                        <input id="exercise2Bullet2-1" name = "exercise2Bullet2" type="radio">
+                        <input id="exercise2Bullet2-2" name = "exercise2Bullet2" type="radio" checked>
+                        <input id="exercise2Bullet2-3" name = "exercise2Bullet2" type="radio">
+                    </div>
+                    <div class = "input-row">
+                        <input id="exercise2Bullet3-1" name = "exercise2Bullet3" type="radio">
+                        <input id="exercise2Bullet3-2" name = "exercise2Bullet3" type="radio">
+                        <input id="exercise2Bullet3-3" name = "exercise2Bullet3" type="radio" checked>
+                    </div>
+                </div>
+                
+                <p>Kleuren:</p>
+                <div class = "input-row">
+                    <input id="exercise2BorderColor" type="color" value = "#000000">
+                    <input id="exercise2BackgroundColor" type="color" value = "#ffffff">
+                    <input id="exercise2AccentColor" type="color" value = "#8cd5ff">
+                </div>               
+            </div>
+            
         </div>
-        <div id= "preview-container">
+        <div id= "previewContainer">
             <canvas id = "preview">
             </canvas>
         </div>
 
 
         <script>
-            const container = document.getElementById("preview-container");
+            window.addEventListener('resize', updateCanvas);
+            window.addEventListener('load', updateCanvas);
+            
+            const container = document.getElementById("previewContainer");
             const canvas = document.getElementById("preview"); 
-            const titleInput = document.getElementById("titleInput");
-            const imageInput1 = document.getElementById("imageInput1");
-            const imageInput2 = document.getElementById("imageInput2");
-            const imageInput3 = document.getElementById("imageInput3");
-            const borderColor = document.getElementById("borderColor");
-            const backgroundColor = document.getElementById("backgroundColor");
-            const accentColor = document.getElementById("accentColor");
-            const image1 = new Image();
-            const image2 = new Image();
-            const image3 = new Image();
-            const saveButton = document.getElementById("save-button");
-            let jsPdfScript = null;
-            image1.onload = () => { updateCanvas(); }
-            image2.onload = () => { updateCanvas(); }
-            image3.onload = () => { updateCanvas(); }
+            const saveButton = document.getElementById("saveButton");
+            
+            /*****************************************************************/
+            
+            const exercise1Images = createImages(1);
+            const exercise2Images = createImages(2);
+            const exerciseImages = [ exercise1Images, exercise2Images ];
+            
+            function createImages(exercise)
+            {
+                const imageArray = [];
+                for(let i = 0; i < 3; i += 1)
+                {
+                    const image = new Image();
+                    image.onload = () => { updateCanvas(); }
+                    imageArray.push(image);
+                }
+                return imageArray;
+            }
             
             function updateImageFunction(image)
             {
@@ -320,64 +374,90 @@
                 }
             }
             
-            function connectToBullet(bullet)
+            /*****************************************************************/            
+            
+            function getExerciseElements(exercise)
             {
-                for(let i = 1; i <= 3; i += 1)
-                {
-                    const bulletElement = document.getElementById("bullet" + bullet + "_" + i);
-                    bulletElement.onchange = () => { updateCanvas() };
-                }
-            }
-            
-            connectToBullet(1);
-            connectToBullet(2);
-            connectToBullet(3);
-            
-            imageInput1.onchange = updateImageFunction(image1);
-            imageInput2.onchange = updateImageFunction(image2);
-            imageInput3.onchange = updateImageFunction(image3);
-            borderColor.oninput = () => { updateCanvas() };
-            borderColor.onchange = () => { updateCanvas(); }
-            backgroundColor.oninput = () => { updateCanvas() };
-            backgroundColor.onchange = () => { updateCanvas(); }
-            accentColor.oninput = () => { updateCanvas() };
-            accentColor.onchange = () => { updateCanvas(); }
-            window.addEventListener('resize', updateCanvas);
-            window.addEventListener('load', updateCanvas);
-            
-            function getBullet(bullet)
-            {
-                for(let i = 1; i <= 3; i += 1)
-                {
-                    const bulletElement = document.getElementById("bullet" + bullet + "_" + i);
-                    if (bulletElement.checked)
-                        return i;
-                }
-                return 0;
-            }
-            
-            function exerciseData()
-            {
-                return { 
-                    "title": titleInput.value, 
-                    "images": [ image1, image2, image3 ], 
-                    "bullets": [ getBullet(1), getBullet(2), getBullet(3) ],
-                    "borderColor": borderColor.value,
-                    "backgroundColor": backgroundColor.value,
-                    "accentColor": accentColor.value
+                return {
+                    titleInput: document.getElementById("exercise" + exercise + "TitleInput"),
+                    checkBox: document.getElementById("exercise" + exercise + "CheckBox"),
+                    borderColor: document.getElementById("exercise" + exercise + "BorderColor"),
+                    backgroundColor: document.getElementById("exercise" + exercise + "BackgroundColor"),
+                    accentColor: document.getElementById("exercise" + exercise + "AccentColor"),
+                    imageInputs: 
+                    [
+                        document.getElementById("exercise" + exercise + "ImageInput1"),
+                        document.getElementById("exercise" + exercise + "ImageInput2"),
+                        document.getElementById("exercise" + exercise + "ImageInput3")
+                    ],
+                    bullets:
+                    [
+                        [
+                            document.getElementById("exercise" + exercise + "Bullet1-1"),
+                            document.getElementById("exercise" + exercise + "Bullet1-2"),
+                            document.getElementById("exercise" + exercise + "Bullet1-3")
+                        ],
+                        [
+                            document.getElementById("exercise" + exercise + "Bullet2-1"),
+                            document.getElementById("exercise" + exercise + "Bullet2-2"),
+                            document.getElementById("exercise" + exercise + "Bullet2-3")
+                        ],
+                        [
+                            document.getElementById("exercise" + exercise + "Bullet3-1"),
+                            document.getElementById("exercise" + exercise + "Bullet3-2"),
+                            document.getElementById("exercise" + exercise + "Bullet3-3")
+                        ]
+                    ]
                 };
             }
+            
+            function connectToExerciseElements(exerciseElements, images)
+            {
+                exerciseElements.titleInput.oninput = updateCanvas;
+                exerciseElements.titleInput.onchange = updateCanvas;
+                exerciseElements.checkBox.oninput = updateCanvas;
+                exerciseElements.checkBox.onchange = updateCanvas;
+                exerciseElements.borderColor.oninput = updateCanvas;
+                exerciseElements.borderColor.onchange = updateCanvas;
+                exerciseElements.accentColor.oninput = updateCanvas;
+                exerciseElements.accentColor.onchange = updateCanvas;
+                exerciseElements.backgroundColor.oninput = updateCanvas;
+                exerciseElements.backgroundColor.onchange = updateCanvas;
+                for(let i = 0; i < 3; i += 1)
+                {
+                    exerciseElements.imageInputs[i].onchange = updateImageFunction(images[i]);
+                    exerciseElements.imageInputs[i].oninput = updateImageFunction(images[i]);
+                    
+                    for(let j = 0; j < 3; j += 1)
+                    {
+                        exerciseElements.bullets[i][j].onchange = updateCanvas;
+                        exerciseElements.bullets[i][j].ininput = updateCanvas;
+                    }
+                }
+            }
+            
+            const exercise1Elements = getExerciseElements(1);
+            const exercise2Elements = getExerciseElements(2);
+            const exerciseElements = [ exercise1Elements, exercise2Elements ];            
+                        
+            connectToExerciseElements(exercise1Elements, exercise1Images);
+            connectToExerciseElements(exercise2Elements, exercise2Images);
+                       
+            exercise2CheckBox.onchanged = updateCanvas();
+            exercise2CheckBox.oninput = updateCanvas();
+                        
+            /*****************************************************************/
             
             function containerSize()
             {
             	const computedStyle = getComputedStyle(container);
 
-		let width = container.clientWidth // width with padding
-		let height = container.clientHeight // height with padding
+                let width = container.clientWidth // width with padding
+                let height = container.clientHeight // height with padding
 
-		height -= parseFloat(computedStyle.paddingTop) + parseFloat(computedStyle.paddingBottom)
-		width -= parseFloat(computedStyle.paddingLeft) + parseFloat(computedStyle.paddingRight)
-		return { "width": width, "height": height };
+                height -= parseFloat(computedStyle.paddingTop) + parseFloat(computedStyle.paddingBottom)
+                width -= parseFloat(computedStyle.paddingLeft) + parseFloat(computedStyle.paddingRight)
+                return { "width": width, "height": height };
             }
             
             function resizeCanvas()
@@ -386,9 +466,7 @@
                 const w = size.width;
                 const h = size.height;
                 const ratio = w / h;
-                
-                console.log(ratio);
-                
+                                
                 if (ratio > 0.70710678118)
                 {
                     canvas.height = h;
@@ -406,7 +484,38 @@
                 resizeCanvas();
                 
                 const canvasDrawer = new CanvasDrawer(canvas);
-                drawPreview(canvasDrawer, exerciseData());
+                drawPreview(canvasDrawer, exerciseData(1), exerciseData(2));
+            }
+            
+            /*****************************************************************/
+            
+            let jsPdfScript = null;
+                        
+            
+            function getBullet(exercise, bullet)
+            {
+                for(let i = 1; i <= 3; i += 1)
+                {
+                    const bulletElement = document.getElementById("exercise" + exercise + "Bullet" + bullet + "-" + i);
+                    if (bulletElement.checked)
+                        return i;
+                }
+                return 0;
+            }
+            
+            function exerciseData(exercise)
+            {
+                const elements = exerciseElements[exercise - 1];
+                const images = exerciseImages[exercise - 1];
+                return { 
+                    "title": elements.titleInput.value, 
+                    "enabled": elements.checkBox.checked,
+                    "images": images,
+                    "bullets": [ getBullet(exercise, 1), getBullet(exercise, 2), getBullet(exercise, 3) ],
+                    "borderColor": elements.borderColor.value,
+                    "backgroundColor": elements.backgroundColor.value,
+                    "accentColor": elements.accentColor.value
+                };
             }
             
             function loadJsPdf(callback)
@@ -440,7 +549,7 @@
                 addComicNeue(doc);
                 
                 const pdfDrawer = new PDFDrawer(doc);
-                drawPreview(pdfDrawer, exerciseData());
+                drawPreview(pdfDrawer, exerciseData(1), exerciseData(2));
                 
                 saveButton.enabled = false;
                 doc.save("result.pdf");

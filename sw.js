@@ -1,5 +1,5 @@
 /*global self, caches, fetch*/
-/*version 1.0.7*/
+/*version 1.0.8*/
 
 const CACHE_NAME = "offline-kraak-de-code-cache";
 
@@ -24,6 +24,12 @@ self.addEventListener('install', function (event) {
                 './fonts/ComicNeue-Bold.ttf',
                 './fonts/ComicNeue-Bold.woff',
                 './fonts/ComicNeue-Bold.woff2',
+                './fonts/OpenSans-Regular.ttf',
+                './fonts/OpenSans-Regular.woff',
+                './fonts/OpenSans-Regular.woff2',
+                './fonts/OpenSans-Bold.ttf',
+                './fonts/OpenSans-Bold.woff',
+                './fonts/OpenSans-Bold.woff2',
                 './index.html',                
                 './manifest.json',
                 './sw.js'
