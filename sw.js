@@ -42,6 +42,7 @@ self.addEventListener('fetch', function (event) {
 });
 
 function fetchAndCache (url) {
+    "use strict";
     return fetch(url).then(function (response) {
         // Check if we received a valid response
         if (!response.ok) {

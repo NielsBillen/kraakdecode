@@ -30,30 +30,12 @@
             }
             
             @font-face {
-                font-family: OpenSans-Regular;
-                src: url('fonts/OpenSans-Regular.woff2') format('woff2'),
-                     url('fonts/OpenSans-Regular.woff') format('woff'),
-                     url('fonts/OpenSans-Regular.ttf') format('truetype');
+                font-family: ComicNeue-Regular;
+                src: url('fonts/ComicNeue-Regular.ttf') format('truetype');
                 font-weight: normal;
                 font-style: normal;
             }
             
-            /*@font-face {
-                font-family: OpenSans-Medium;
-                src: url('fonts/OpenSans-Medium.woff2') format('woff2'),
-                     url('fonts/OpenSans-Medium.woff') format('woff'),
-                     url('fonts/OpenSans-Medium.ttf') format('truetype');
-                font-weight: medium;
-                font-style: normal;
-            }*/
-            
-            @font-face {
-                font-family: OpenSans-Medium;
-                src: 
-                     url('fonts/OpenSans-Bold.ttf') format('truetype');
-                font-weight: bold;
-                font-style: normal;
-            }
             :root
             {
                 --preview-width: min(90vw, 640px);
@@ -77,9 +59,7 @@
                 flex-direction: row;
                 width: 100%;
                 height: 100%;
-                color: "#333";
-                font-weight: 400;
-                font-family: OpenSans-Regular;
+                font-family: ComicNeue-Bold;
             }
             
             #editor-panel
@@ -89,68 +69,42 @@
                 display: flex;
                 flex-direction: column;              
                 overflow-y: auto;
-                border-right: 1px solid black;
             }
             
             label
             {
+                font-family: ComicNeue-Bold;
+                font-weight: bold;
                 font-size: 1rem;
             }
             
-            .inputs
+            #inputs
             {
-                display: grid;
-                grid-template-columns: auto 1fr;
-                grid-row-gap: 0.5rem;
-                grid-column-gap: 0.5rem;
-                align-items: center;
-            }
-            
-            .input > p
-            {
-                margin: 0;
+                display: flex;
+                flex-direction: column;
+                margin-left: 0.5rem;
             }
             
             h1
             {
                 margin-top: 0;
                 font-size: 2.5rem;
-                font-family: ComicNeue-Bold;
-                text-transform: uppercase;
             }
             
-            h2
+            #inputs > input
             {
-                margin-top: 0;
-                font-size: 1.5rem;
-                font-family: OpenSans-Medium;
-                margin-bottom: 0.25rem;
-            }
-            
-            input[type=text]
-            {
-                border-radius: 2px;
-                border: 1px solid black;
-                height: 1.5rem;
-                font-family: OpenSans-Regular;
-            }
-            input[type=text]:focus
-            {
-                outline-width: 0;
-                border: 2px solid blue;
+                margin-bottom: 0.5rem;
+                margin-top: 0.25rem;
+                margin-left: 0.5rem;
             }
             
             .input-row
             {
+                margin-bottom: 0.5rem;
+                margin-top: 0.25rem;
+                margin-left: 0.5rem;
                 display: flex;
                 flex-direction: row;
-                gap: 0.5rem;
-            }
-            
-            .input-column
-            {
-                display: flex;
-                flex-direction: column;
                 gap: 0.5rem;
             }
             
@@ -177,37 +131,6 @@
                 overflow: hidden;
                 background-color: white;
                 outline: 1px solid black;
-            }
-            
-            button
-            {
-                font-family: OpenSans-Regular;
-                min-height: 2rem;
-                min-width: 6rem;
-                border-radius: 4px;
-                border: 0px;
-                background-color: #3689e6;
-                color: white;
-                cursor: pointer;
-                font-size: 1rem;
-            }
-            
-            .upload-button
-            {
-                border-radius: 4px;
-                text-align: center;
-                background-color: #3689e6;
-                color: white;
-                font-size: 1rem;
-                padding-top: 0.25rem;
-                padding-bottom: 0.25rem;
-                max-width: 6rem;
-                cursor: pointer;
-            }
-            
-            input[type=file]
-            {
-                font-family: OpenSans-Regular;
             }
             
             @media (max-aspect-ratio: 10/9)
@@ -238,50 +161,47 @@
         <div id = "editor-panel">
             <h1>Editor</h1>
             
-            <h2>Oefening 1:</h2>
-            
-            <div class = "inputs">
-                <p>Titel:</p>
-                <input id="titleInput" type="text" oninput="updateCanvas()" value="kraak de code">
+            <div id = "inputs">
+                <label for="titleInput">Titel:</label>
+                <input id="titleInput" oninput="updateCanvas()" value="kraak de code">
 
-                <p>Afbeeldingen:</p>
-                <div class = "input-column">
-                    <label class = "upload-button" for="imageInput1">Upload</label>
-                    <input id="imageInput1" type="file" accept="image/jpeg, image/png" hidden>
-                    <label class = "upload-button" for="imageInput2">Upload</label>
-                    <input id="imageInput2" type="file" accept="image/jpeg, image/png" hidden>
-                    <label class = "upload-button" for="imageInput3">Upload</label>
-                    <input id="imageInput3" type="file" accept="image/jpeg, image/png" hidden>
+                <label for="imageInput1">Afbeelding 1:</label>
+                <input id="imageInput1" type="file" accept="image/jpeg, image/png">
+
+                <label for="imageInput2">Afbeelding 2:</label>
+                <input id="imageInput2" type="file" accept="image/jpeg, image/png">
+
+                <label for="imageInput3">Afbeelding 3:</label>
+                <input id="imageInput3" type="file" accept="image/jpeg, image/png">
+                
+                <label>Bolletje 1:</label>
+                <div class = "input-row">
+                    <input id="bullet1_1" name = "bullet1" type="radio" checked>
+                    <input id="bullet1_2" name = "bullet1" type="radio">
+                    <input id="bullet1_3" name = "bullet1" type="radio">
                 </div>
                 
-                <p>Bolletjes:</p>
-                <div class = "input-column">
-                    <div class = "input-row">
-                        <input id="bullet1_1" name = "bullet1" type="radio" checked>
-                        <input id="bullet1_2" name = "bullet1" type="radio">
-                        <input id="bullet1_3" name = "bullet1" type="radio">
-                    </div>
-                    <div class = "input-row">
-                        <input id="bullet2_1" name = "bullet2" type="radio">
-                        <input id="bullet2_2" name = "bullet2" type="radio" checked>
-                        <input id="bullet2_3" name = "bullet2" type="radio">
-                    </div>
-                    <div class = "input-row">
-                        <input id="bullet3_1" name = "bullet3" type="radio">
-                        <input id="bullet3_2" name = "bullet3" type="radio">
-                        <input id="bullet3_3" name = "bullet3" type="radio" checked>
-                    </div>
+                <label>Bolletje 2:</label>
+                <div class = "input-row">
+                    <input id="bullet2_1" name = "bullet2" type="radio">
+                    <input id="bullet2_2" name = "bullet2" type="radio" checked>
+                    <input id="bullet2_3" name = "bullet2" type="radio">
                 </div>
                 
-                <p>Kleuren:</p>
+                <label>Bolletje 3:</label>
+                <div class = "input-row">
+                    <input id="bullet3_1" name = "bullet3" type="radio">
+                    <input id="bullet3_2" name = "bullet3" type="radio">
+                    <input id="bullet3_3" name = "bullet3" type="radio" checked>
+                </div>
+                
+                <label for="borderColor">Kleuren:</label>
                 <div class = "input-row">
                     <input id="borderColor" type="color" value = "#000000">
                     <input id="backgroundColor" type="color" value = "#ffffff">
                     <input id="accentColor" type="color" value = "#8cd5ff">
-                </div>               
+                </div>
             </div>
-            
-            <h2>Oefening 2:</h2>
             
             <button id = "save-button" onclick="savePdf()">Opslaan</button>
         </div>
