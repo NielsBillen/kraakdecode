@@ -1,5 +1,5 @@
 /*global self, caches, fetch*/
-/*version 1.0.8*/
+/*version 1.0.9*/
 
 const CACHE_NAME = "offline-kraak-de-code-cache";
 
