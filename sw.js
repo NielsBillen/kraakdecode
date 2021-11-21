@@ -31,8 +31,7 @@ self.addEventListener('install', function (event) {
                 './fonts/OpenSans-Bold.woff',
                 './fonts/OpenSans-Bold.woff2',
                 './index.html',                
-                './manifest.json',
-                './sw.js'
+                './manifest.json'
             ]);
         }).then(self.skipWaiting())
     );
