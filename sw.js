@@ -1,5 +1,5 @@
 /*global self, caches, fetch*/
-/*version 1.0.9*/
+/*version 1.0.13*/
 
 const CACHE_NAME = "offline-kraak-de-code-cache";
 
@@ -34,7 +34,7 @@ self.addEventListener('install', function (event) {
                 './manifest.json',
                 './sw.js'
             ]);
-        })
+        }).then(self.skipWaiting())
     );
 });
 
