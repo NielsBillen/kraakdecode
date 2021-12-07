@@ -68,7 +68,7 @@
                 flex-direction: row;
                 width: 100%;
                 height: 100%;
-                color: "#333";
+                color: #333;
                 font-weight: 400;
                 font-family: OpenSans-Regular;
             }
@@ -81,9 +81,6 @@
                 justify-content: space-between;
             }
             
-            #saveButton
-            {
-            }
             #editor-panel
             {
                 padding: 1rem;
@@ -91,7 +88,6 @@
                 display: flex;
                 flex-direction: column;              
                 overflow-y: auto;
-                border-right: 1px solid black;
             }
             
             label
@@ -124,7 +120,6 @@
             
             h2
             {
-                margin-top: 2rem;
                 font-size: 1.5rem;
                 font-family: OpenSans-Bold;
                 margin-bottom: 1rem;
@@ -137,6 +132,7 @@
                 border: 1px solid black;
                 height: 1.5rem;
                 font-family: OpenSans-Regular;
+                max-width: 10rem;
             }
             
             input[type=text]:focus
@@ -151,7 +147,15 @@
                 margin-left: 0;
             }
             
-            .input-row
+            #exercises
+            {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+            
+            .input-row, .upload-row
             {
                 display: flex;
                 flex-direction: row;
@@ -165,7 +169,6 @@
                 gap: 0.5rem;
             }
         
-            
             #previewContainer
             {
                 flex: 1;
@@ -200,13 +203,14 @@
             
             .upload-button
             {
+                box-sizing: border-box;
                 border-radius: 4px;
                 text-align: center;
                 background-color: #3689e6;
                 color: white;
                 font-size: 1rem;
                 padding: 0.4rem 0.75rem;
-                max-width: 8rem;
+                max-width: 10rem;
                 cursor: pointer;
             }
             
@@ -229,6 +233,16 @@
                     overflow-y: visible;
                 }
                 
+                .upload-row
+                {
+                    flex-direction: column;
+                }
+                
+                .upload-button
+                {
+                    flex: 1;
+                }
+                
                 #previewContainer
                 {
                     flex-direction: row;
@@ -248,100 +262,103 @@
                 <button id = "saveButton" onclick="savePdf()">PDF opslaan</button>
             </div>
 
-            
-            <h2>Oefening 1:</h2>
-            
-            <div class = "inputs">
-                <p>Aanwezig:</p>
-                <input id = "exercise1CheckBox" input type="checkbox" checked>
-                
-                <p>Titel:</p>
-                <input id="exercise1TitleInput" type="text" oninput="updateCanvas()" value="kraak de code">
+            <div id = "exercises">
+                <div class = "exercise">
+                    <h2>Oefening 1:</h2>
 
-                <p>Afbeeldingen:</p>
-                <div class = "input-row">
-                    <label class = "upload-button" for="exercise1ImageInput1">Upload</label>
-                    <input id="exercise1ImageInput1" type="file" accept="image/jpeg, image/png" hidden>
-                    <label class = "upload-button" for="exercise1ImageInput2">Upload</label>
-                    <input id="exercise1ImageInput2" type="file" accept="image/jpeg, image/png" hidden>
-                    <label class = "upload-button" for="exercise1ImageInput3">Upload</label>
-                    <input id="exercise1ImageInput3" type="file" accept="image/jpeg, image/png" hidden>
+                    <div class = "inputs">
+                        <p>Aanwezig:</p>
+                        <input id = "exercise1CheckBox" input type="checkbox" checked>
+
+                        <p>Titel:</p>
+                        <input id="exercise1TitleInput" type="text" oninput="updateCanvas()" value="kraak de code">
+
+                        <p>Afbeeldingen:</p>
+                        <div class = "upload-row">
+                            <label class = "upload-button" for="exercise1ImageInput1">Upload</label>
+                            <input id="exercise1ImageInput1" type="file" accept="image/jpeg, image/png" hidden>
+                            <label class = "upload-button" for="exercise1ImageInput2">Upload</label>
+                            <input id="exercise1ImageInput2" type="file" accept="image/jpeg, image/png" hidden>
+                            <label class = "upload-button" for="exercise1ImageInput3">Upload</label>
+                            <input id="exercise1ImageInput3" type="file" accept="image/jpeg, image/png" hidden>
+                        </div>
+
+                        <p>Bolletjes:</p>
+                        <div class = "input-column">
+                            <div class = "input-row">
+                                <input id="exercise1Bullet1-1" name = "exercise1Bullet1" type="radio" checked>
+                                <input id="exercise1Bullet1-2" name = "exercise1Bullet1" type="radio">
+                                <input id="exercise1Bullet1-3" name = "exercise1Bullet1" type="radio">
+                            </div>
+                            <div class = "input-row">
+                                <input id="exercise1Bullet2-1" name = "exercise1Bullet2" type="radio">
+                                <input id="exercise1Bullet2-2" name = "exercise1Bullet2" type="radio" checked>
+                                <input id="exercise1Bullet2-3" name = "exercise1Bullet2" type="radio">
+                            </div>
+                            <div class = "input-row">
+                                <input id="exercise1Bullet3-1" name = "exercise1Bullet3" type="radio">
+                                <input id="exercise1Bullet3-2" name = "exercise1Bullet3" type="radio">
+                                <input id="exercise1Bullet3-3" name = "exercise1Bullet3" type="radio" checked>
+                            </div>
+                        </div>
+
+                        <p>Kleuren:</p>
+                        <div class = "input-row">
+                            <input id="exercise1BorderColor" type="color" value = "#000000">
+                            <input id="exercise1BackgroundColor" type="color" value = "#ffffff">
+                            <input id="exercise1AccentColor" type="color" value = "#8cd5ff">
+                        </div>               
+                    </div>
                 </div>
-                
-                <p>Bolletjes:</p>
-                <div class = "input-column">
-                    <div class = "input-row">
-                        <input id="exercise1Bullet1-1" name = "exercise1Bullet1" type="radio" checked>
-                        <input id="exercise1Bullet1-2" name = "exercise1Bullet1" type="radio">
-                        <input id="exercise1Bullet1-3" name = "exercise1Bullet1" type="radio">
-                    </div>
-                    <div class = "input-row">
-                        <input id="exercise1Bullet2-1" name = "exercise1Bullet2" type="radio">
-                        <input id="exercise1Bullet2-2" name = "exercise1Bullet2" type="radio" checked>
-                        <input id="exercise1Bullet2-3" name = "exercise1Bullet2" type="radio">
-                    </div>
-                    <div class = "input-row">
-                        <input id="exercise1Bullet3-1" name = "exercise1Bullet3" type="radio">
-                        <input id="exercise1Bullet3-2" name = "exercise1Bullet3" type="radio">
-                        <input id="exercise1Bullet3-3" name = "exercise1Bullet3" type="radio" checked>
+                <div class= "exercise">
+                    <h2>Oefening 2:</h2>
+
+                    <div class = "inputs">
+                        <p>Aanwezig:</p>
+                        <input id = "exercise2CheckBox" input type="checkbox" checked>
+
+                        <p>Titel:</p>
+                        <input id="exercise2TitleInput" type="text" oninput="updateCanvas()" value="kraak de code">
+
+
+                        <p>Afbeeldingen:</p>
+                        <div class = "upload-row">
+                            <label class = "upload-button" for="exercise2ImageInput1">Upload</label>
+                            <input id="exercise2ImageInput1" type="file" accept="image/jpeg, image/png" hidden>
+                            <label class = "upload-button" for="exercise2ImageInput2">Upload</label>
+                            <input id="exercise2ImageInput2" type="file" accept="image/jpeg, image/png" hidden>
+                            <label class = "upload-button" for="exercise2ImageInput3">Upload</label>
+                            <input id="exercise2ImageInput3" type="file" accept="image/jpeg, image/png" hidden>
+                        </div>
+
+                        <p>Bolletjes:</p>
+                        <div class = "input-column">
+                            <div class = "input-row">
+                                <input id="exercise2Bullet1-1" name = "exercise2Bullet1" type="radio" checked>
+                                <input id="exercise2Bullet1-2" name = "exercise2Bullet1" type="radio">
+                                <input id="exercise2Bullet1-3" name = "exercise2Bullet1" type="radio">
+                            </div>
+                            <div class = "input-row">
+                                <input id="exercise2Bullet2-1" name = "exercise2Bullet2" type="radio">
+                                <input id="exercise2Bullet2-2" name = "exercise2Bullet2" type="radio" checked>
+                                <input id="exercise2Bullet2-3" name = "exercise2Bullet2" type="radio">
+                            </div>
+                            <div class = "input-row">
+                                <input id="exercise2Bullet3-1" name = "exercise2Bullet3" type="radio">
+                                <input id="exercise2Bullet3-2" name = "exercise2Bullet3" type="radio">
+                                <input id="exercise2Bullet3-3" name = "exercise2Bullet3" type="radio" checked>
+                            </div>
+                        </div>
+
+                        <p>Kleuren:</p>
+                        <div class = "input-row">
+                            <input id="exercise2BorderColor" type="color" value = "#000000">
+                            <input id="exercise2BackgroundColor" type="color" value = "#ffffff">
+                            <input id="exercise2AccentColor" type="color" value = "#8cd5ff">
+                        </div>               
                     </div>
                 </div>
-                
-                <p>Kleuren:</p>
-                <div class = "input-row">
-                    <input id="exercise1BorderColor" type="color" value = "#000000">
-                    <input id="exercise1BackgroundColor" type="color" value = "#ffffff">
-                    <input id="exercise1AccentColor" type="color" value = "#8cd5ff">
-                </div>               
             </div>
-            
-            <h2>Oefening 2:</h2>
-            
-            <div class = "inputs">
-                <p>Aanwezig:</p>
-                <input id = "exercise2CheckBox" input type="checkbox" checked>
-
-                <p>Titel:</p>
-                <input id="exercise2TitleInput" type="text" oninput="updateCanvas()" value="kraak de code">
-
-                
-                <p>Afbeeldingen:</p>
-                <div class = "input-row">
-                    <label class = "upload-button" for="exercise2ImageInput1">Upload</label>
-                    <input id="exercise2ImageInput1" type="file" accept="image/jpeg, image/png" hidden>
-                    <label class = "upload-button" for="exercise2ImageInput2">Upload</label>
-                    <input id="exercise2ImageInput2" type="file" accept="image/jpeg, image/png" hidden>
-                    <label class = "upload-button" for="exercise2ImageInput3">Upload</label>
-                    <input id="exercise2ImageInput3" type="file" accept="image/jpeg, image/png" hidden>
-                </div>
-                
-                <p>Bolletjes:</p>
-                <div class = "input-column">
-                    <div class = "input-row">
-                        <input id="exercise2Bullet1-1" name = "exercise2Bullet1" type="radio" checked>
-                        <input id="exercise2Bullet1-2" name = "exercise2Bullet1" type="radio">
-                        <input id="exercise2Bullet1-3" name = "exercise2Bullet1" type="radio">
-                    </div>
-                    <div class = "input-row">
-                        <input id="exercise2Bullet2-1" name = "exercise2Bullet2" type="radio">
-                        <input id="exercise2Bullet2-2" name = "exercise2Bullet2" type="radio" checked>
-                        <input id="exercise2Bullet2-3" name = "exercise2Bullet2" type="radio">
-                    </div>
-                    <div class = "input-row">
-                        <input id="exercise2Bullet3-1" name = "exercise2Bullet3" type="radio">
-                        <input id="exercise2Bullet3-2" name = "exercise2Bullet3" type="radio">
-                        <input id="exercise2Bullet3-3" name = "exercise2Bullet3" type="radio" checked>
-                    </div>
-                </div>
-                
-                <p>Kleuren:</p>
-                <div class = "input-row">
-                    <input id="exercise2BorderColor" type="color" value = "#000000">
-                    <input id="exercise2BackgroundColor" type="color" value = "#ffffff">
-                    <input id="exercise2AccentColor" type="color" value = "#8cd5ff">
-                </div>               
-            </div>
-            
         </div>
         <div id= "previewContainer">
             <canvas id = "preview">
