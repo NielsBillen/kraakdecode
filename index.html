@@ -73,6 +73,17 @@
                 font-family: OpenSans-Regular;
             }
             
+            #title-row
+            {
+                display: flex;
+                flex-direction: row;
+                align-items: center;    
+                justify-content: space-between;
+            }
+            
+            #saveButton
+            {
+            }
             #editor-panel
             {
                 padding: 1rem;
@@ -121,6 +132,7 @@
             
             input[type=text]
             {
+            	box-sizing: border-box;
                 border-radius: 2px;
                 border: 1px solid black;
                 height: 1.5rem;
@@ -130,6 +142,7 @@
             input[type=text]:focus
             {
                 outline-width: 0;
+                border-radius: 4px;
                 border: 2px solid blue;
             }
             
@@ -151,12 +164,7 @@
                 flex-direction: column;
                 gap: 0.5rem;
             }
-            
-            #saveButton
-            {
-                margin-top: 1rem;
-                align-self: flex-start;
-            }
+        
             
             #previewContainer
             {
@@ -197,9 +205,8 @@
                 background-color: #3689e6;
                 color: white;
                 font-size: 1rem;
-                padding-top: 0.25rem;
-                padding-bottom: 0.25rem;
-                max-width: 6rem;
+                padding: 0.4rem 0.75rem;
+                max-width: 8rem;
                 cursor: pointer;
             }
             
@@ -236,9 +243,11 @@
     
     <body>
         <div id = "editor-panel">
-            <h1>Editor</h1>
+            <div id = "title-row">
+                <h1>Editor</h1>
+                <button id = "saveButton" onclick="savePdf()">PDF opslaan</button>
+            </div>
 
-            <button id = "saveButton" onclick="savePdf()">Opslaan</button>
             
             <h2>Oefening 1:</h2>
             
@@ -250,7 +259,7 @@
                 <input id="exercise1TitleInput" type="text" oninput="updateCanvas()" value="kraak de code">
 
                 <p>Afbeeldingen:</p>
-                <div class = "input-column">
+                <div class = "input-row">
                     <label class = "upload-button" for="exercise1ImageInput1">Upload</label>
                     <input id="exercise1ImageInput1" type="file" accept="image/jpeg, image/png" hidden>
                     <label class = "upload-button" for="exercise1ImageInput2">Upload</label>
@@ -297,7 +306,7 @@
 
                 
                 <p>Afbeeldingen:</p>
-                <div class = "input-column">
+                <div class = "input-row">
                     <label class = "upload-button" for="exercise2ImageInput1">Upload</label>
                     <input id="exercise2ImageInput1" type="file" accept="image/jpeg, image/png" hidden>
                     <label class = "upload-button" for="exercise2ImageInput2">Upload</label>
