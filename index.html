@@ -73,14 +73,6 @@
                 font-family: OpenSans-Regular;
             }
             
-            #title-row
-            {
-                display: flex;
-                flex-direction: row;
-                align-items: center;    
-                justify-content: space-between;
-            }
-            
             #editor-panel
             {
                 padding: 1rem;
@@ -88,11 +80,17 @@
                 display: flex;
                 flex-direction: column;              
                 overflow-y: auto;
+                gap: 1rem;
             }
             
             label
             {
                 font-size: 1rem;
+            }
+            
+            .titleButton
+            {
+                min-width: 7rem;
             }
             
             .inputs
@@ -104,8 +102,8 @@
                 align-items: center;
                 margin-left: 0.5rem;
             }
-            
-            .inputs > p
+        
+            p 
             {
                 margin: 0;
             }
@@ -122,6 +120,7 @@
             {
                 font-size: 1.5rem;
                 font-family: OpenSans-Bold;
+                margin: 0;
                 margin-bottom: 1rem;
             }
             
@@ -155,7 +154,12 @@
                 gap: 1rem;
             }
             
-            .input-row, .upload-row
+            #fileTitleRow
+            {
+                
+            }
+            
+            .input-row, .upload-row, #fileTitleRow
             {
                 display: flex;
                 flex-direction: row;
@@ -201,7 +205,7 @@
                 font-size: 1rem;
             }
             
-            .upload-button
+            .upload-button, .button
             {
                 box-sizing: border-box;
                 border-radius: 4px;
@@ -221,10 +225,20 @@
             
             @media (max-aspect-ratio: 10/9)
             {
+                h1
+                {
+                    text-align: center;
+                }
+                
                 body 
                 {
                     flex-direction: column;
                     height: 200%;
+                }
+                
+                #titleButtons, #fileTitleRow
+                {
+                    justify-content: center;
                 }
                 
                 #editor-panel
@@ -248,6 +262,19 @@
                     flex-direction: row;
                     min-height: 100vh;
                 }
+                
+                .inputs
+                {
+                    margin-left: 0;
+                }
+                
+                .exercise
+                {
+                    border: 1px solid #666;
+                    padding: 1rem 2rem;
+                    border-radius: 2px;
+                }
+                
             }
         </style>
        
@@ -257,11 +284,19 @@
     
     <body>
         <div id = "editor-panel">
-            <div id = "title-row">
-                <h1>Editor</h1>
-                <button id = "saveButton" onclick="savePdf()">PDF opslaan</button>
+            <h1>Editor</h1>
+            <div id = "titleButtons" class = "input-row">
+                <button id = "save" class = "titleButton" onclick = "saveFile()">Opslaan</button>
+                <label class = "button titleButton" for="load">Laden</label>
+                <input id="load" type="file" accept="*" hidden>
+                <button id = "saveToPDFButton" class = "titleButton" onclick="savePdf()">PDF opslaan</button>
             </div>
-
+            
+            <div id="fileTitleRow">
+                <p>Bestandsnaam:</p>
+                <input id="fileTitle" type="text" value="Kraak de Code">
+            </div>
+            
             <div id = "exercises">
                 <div class = "exercise">
                     <h2>Oefening 1:</h2>
@@ -320,7 +355,6 @@
                         <p>Titel:</p>
                         <input id="exercise2TitleInput" type="text" oninput="updateCanvas()" value="kraak de code">
 
-
                         <p>Afbeeldingen:</p>
                         <div class = "upload-row">
                             <label class = "upload-button" for="exercise2ImageInput1">Upload</label>
@@ -370,9 +404,13 @@
             window.addEventListener('resize', updateCanvas);
             window.addEventListener('load', updateCanvas);
             
+            const fileTitle = document.getElementById("fileTitle");
             const container = document.getElementById("previewContainer");
             const canvas = document.getElementById("preview"); 
-            const saveButton = document.getElementById("saveButton");
+            const loadButton = document.getElementById("load");
+            const saveToPDFButton = document.getElementById("saveToPDFButton");
+            
+            loadButton.oninput = (e) => { loadFile(e.target.files[0]); };
             
             /*****************************************************************/
             
@@ -579,11 +617,114 @@
                 const pdfDrawer = new PDFDrawer(doc);
                 drawPreview(pdfDrawer, exerciseData(1), exerciseData(2));
                 
-                saveButton.enabled = false;
-                doc.save("result.pdf");
+                saveToPDFButton.enabled = false;
+                doc.save(fileTitle.value + ".pdf");
             }
             
-            (function () {
+            /*****************************************************************/
+            
+            function toDataUrl(image)
+            {
+                const canvas = document.createElement('canvas');
+                const context = canvas.getContext('2d');
+                canvas.height = image.height;
+                canvas.width = image.width;
+                context.drawImage(image, 0, 0);
+                return canvas.toDataURL("image/png");
+            }
+            
+            function createExerciseSaveData(exercise)
+            {
+                const elements = exerciseElements[exercise - 1];
+                const images = exerciseImages[exercise - 1];
+                return { 
+                    "title": elements.titleInput.value, 
+                    "enabled": elements.checkBox.checked,
+                    "images": [ toDataUrl(images[0]), toDataUrl(images[1]), toDataUrl(images[2])],
+                    "bullets": [ getBullet(exercise, 1), getBullet(exercise, 2), getBullet(exercise, 3) ],
+                    "borderColor": elements.borderColor.value,
+                    "backgroundColor": elements.backgroundColor.value,
+                    "accentColor": elements.accentColor.value
+                };
+            }
+            
+            function downloadFile(content, fileName) 
+            {
+                console.log(content);
+                const a = document.createElement("a");
+                const file = new Blob([content], {type: 'text/plain'});
+                a.href = URL.createObjectURL(file);
+                a.download = fileName;
+                a.click();
+            }
+            
+            function createSaveFile()
+            {
+                return {
+                    "version": "1.0.0",
+                    "exercises": 
+                    [
+                        createExerciseSaveData(1),
+                        createExerciseSaveData(2)
+                    ]
+                }
+            }
+        
+            function saveFile()
+            {
+                downloadFile(JSON.stringify(createSaveFile()), fileTitle.value + '.kdk');                
+            }
+            
+            function loadExercise(exerciseElements, exerciseData, exerciseImages)
+            {
+                exerciseElements.titleInput.value = exerciseData.title;
+                exerciseElements.checkBox.checked = exerciseData.enabled;
+                
+                for(let i = 0; i < 3; i += 1)
+                {
+                    if (exerciseData.images[i] && exerciseData.images[i] !== "data:,")
+                        exerciseImages[i].src = exerciseData.images[i];
+                    
+                    for(let j = 0; j < 3; j += 1)
+                    {
+                        exerciseElements.bullets[i][j].checked = (j === (exerciseData.bullets[i] - 1));
+                    }
+                }
+                
+                exerciseElements.backgroundColor.value = exerciseData.backgroundColor;
+                exerciseElements.accentColor.value = exerciseData.accentColor;
+                exerciseElements.borderColor.value = exerciseData.borderColor;
+            }
+            
+            function loadJson(json)
+            {
+                loadExercise(exerciseElements[0], json.exercises[0], exerciseImages[0]);
+                loadExercise(exerciseElements[1], json.exercises[1], exerciseImages[1]);
+                updateCanvas();
+            }
+            
+            function getFileTitle(filename)
+            {
+                if (filename.endsWith(".kdk"))
+                    return filename.substr(0, filename.length - 4);
+                return filename;
+            }
+            function loadFile(file)
+            {
+                if (!file)
+                    return;
+                const reader = new FileReader();
+                reader.onload = function(e) 
+                {
+                    fileTitle.value = getFileTitle(file.name);
+                    const contents = e.target.result;
+                    loadJson(JSON.parse(contents));
+                };
+                reader.readAsText(file);
+            }
+            
+            
+/*            (function () {
                 "use strict";
 
                 if ('serviceWorker' in navigator) {
@@ -594,7 +735,7 @@
                         console.log('the service worker could not be registered', error);
                     });
                 }
-            }());
+            }());*/
 		</script>
     </body>
 </html>
