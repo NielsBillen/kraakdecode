@@ -303,7 +303,7 @@ function drawPreview(drawer, exerciseData1, exerciseData2)
     const aspectRatio = 1.41421356237;
     const margin = 0.05;
     const indent = 0.02;
-    const titleWidth = 0.1;
+    const titleWidth = 0.06;
     const textBoxIndent = 0.03;
     const imageSeperation = 0.01;
     const imageInset = 0.02;
@@ -314,7 +314,7 @@ function drawPreview(drawer, exerciseData1, exerciseData2)
     const innerWidth = outerWidth - titleWidth - indent;
     const innerHeight = outerHeight - 2 * indent;
     const imageBoxY = innerY + textBoxIndent;
-    const imageBoxWidth = (innerWidth - 2 * textBoxIndent - 2 * imageSeperation) / 3.0;
+    const bulletCount = 3;
     const imageBoxHeight = (innerHeight - 2 * textBoxIndent - imageSeperation) / 2.0;
     
     const textBoxLeftMargin = innerX + textBoxIndent;
@@ -329,33 +329,40 @@ function drawPreview(drawer, exerciseData1, exerciseData2)
         if (!exerciseData.enabled)
             return;
         
+        const exerciseCount = exerciseData.count || 3;
+        const imageBoxWidth = (innerWidth - 2 * textBoxIndent - (exerciseCount - 1) * imageSeperation) / exerciseCount;
+
         drawer.drawRectangle(margin, yOffset + margin, outerWidth, outerHeight, 0.01, exerciseData.borderColor, exerciseData.backgroundColor);
         drawer.drawVerticalText(exerciseData.title, margin + titleWidth * 0.5, yOffset + margin + outerHeight * 0.5, "ComicNeue-Bold", 24, exerciseData.borderColor);
 
         // image rectangle
         drawer.drawRoundedRectangle(innerX, yOffset + innerY, innerWidth, innerHeight, 0.05, 0.01, exerciseData.borderColor, exerciseData.accentColor);
-        for(let i = 0; i < 3; i += 1)
+        for(let i = 0; i < exerciseCount; i += 1)
         {
             // draw the box
             const imageBoxX = textBoxLeftMargin + i * (imageSeperation + imageBoxWidth);
             drawer.drawRoundedRectangle(imageBoxX, yOffset + imageBoxY, imageBoxWidth, imageBoxHeight, 0.03, 0.01, exerciseData.borderColor, "white");
 
-
-            // draw the image
+            // calculate the size of the circles
             const imageX = imageBoxX + imageInset;
             const imageWidth = imageBoxWidth - 2 * imageInset;
-            const imageHeight = imageWidth * 0.9;
-            const imageY = imageBoxY + imageBoxHeight - imageHeight - imageInset;
-            drawer.drawImage(exerciseData.images[i], imageX, yOffset + imageY, imageWidth, imageHeight);
-
-            const circleRadius = (imageY - imageBoxY) * 0.25;
-            const circleY = yOffset + (imageBoxY + imageY) * 0.5;
-
+            const circleSpacing = imageWidth * 0.05;
+            const circleRadius = Math.min((imageBoxHeight - 2 * imageInset) * 0.1, (imageWidth - (bulletCount - 1) * circleSpacing) * 0.5 / bulletCount);
+            
+            // draw the image
+            const imageY = imageBoxY + imageInset + 2 * circleRadius;
+            const imageHeight = imageBoxY + imageBoxHeight - imageY - imageInset;
+            
+            drawer.drawImage(exerciseData.images[i], imageX, yOffset + imageY, imageWidth, imageHeight);            
+            
+            const circleY = yOffset + imageBoxY + imageInset * 0.5 + circleRadius;
+            const circlesWidth = bulletCount * circleRadius * 2.0 + (bulletCount - 1) * circleSpacing;
+            
             // draw the circles
-            for(let j = 0; j < 3; j += 1)
+            for(let j = 0; j < bulletCount; j += 1)
             {
                 const bulletSelected = exerciseData.bullets[i] == (j + 1); 
-                const circleX = imageBoxX + imageBoxWidth * 0.5 + (j - 1) * circleRadius * 3;
+                const circleX = imageBoxX + (imageBoxWidth - circlesWidth) * 0.5 + j * (2.0 * circleRadius + circleSpacing) + circleRadius;
                 drawer.drawCircle(circleX, circleY, circleRadius, 0.01, exerciseData.borderColor, (bulletSelected ? exerciseData.accentColor : "white"));
             }
         }
