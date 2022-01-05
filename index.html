@@ -88,7 +88,7 @@
                 font-size: 1rem;
             }
             
-            .titleButton
+            .title-button
             {
                 min-width: 7rem;
             }
@@ -131,7 +131,6 @@
                 border: 1px solid black;
                 height: 1.5rem;
                 font-family: OpenSans-Regular;
-                max-width: 10rem;
             }
             
             input[type=text]:focus
@@ -154,22 +153,34 @@
                 gap: 1rem;
             }
             
-            #fileTitleRow
+            #file-title-row
             {
                 
             }
             
-            .input-row, .upload-row, #fileTitleRow, #exerciseCountSelectionRow
+            .input-row, .upload-row, #file-title-row, #exercise-count-selection-row
             {
                 display: flex;
                 flex-direction: row;
                 gap: 0.5rem;
+                align-items: center;
+
             }
             
-            .input-grid
+            #exercise-count-selection-row
             {
-                display: grid;
-                grid-template-columns: auto auto;
+                align-items: center;
+            }
+
+            input[type=radio]
+            {
+                margin: 0;
+            }
+
+            #exercise-count-selection-row > input[type=radio]
+            {
+                margin-left: -0.25rem;
+                margin-right: 0.25rem;
             }
             
             .input-column
@@ -178,8 +189,13 @@
                 flex-direction: column;
                 gap: 0.5rem;
             }
+
+            .spacer
+            {
+                flex: 1;
+            }
         
-            #previewContainer
+            #preview-container
             {
                 flex: 1;
                 flex-direction: column;
@@ -223,6 +239,14 @@
                 max-width: 10rem;
                 cursor: pointer;
             }
+
+            .bullet-button
+            {
+                min-width: 1.75rem;
+                min-height: 1.75rem;
+                width: 1.75rem;
+                height: 1.75rem;
+            }
             
             input[type=file]
             {
@@ -242,7 +266,7 @@
                     height: 200%;
                 }
                 
-                #titleButtons, #fileTitleRow, #exerciseCountSelectionRow
+                #title-buttons, #file-title-row, #exercise-count-selection-row
                 {
                     justify-content: center;
                 }
@@ -260,10 +284,11 @@
                 
                 .upload-button
                 {
-                    flex: 1;
+                    align-self: stretch;
+                    max-width: 100%;
                 }
                 
-                #previewContainer
+                #preview-container
                 {
                     flex-direction: row;
                     min-height: 100vh;
@@ -291,25 +316,23 @@
     <body>
         <div id = "editor-panel">
             <h1>Editor</h1>
-            <div id = "titleButtons" class = "input-row">
-                <button id = "save" class = "titleButton" onclick = "saveFile()">Opslaan</button>
-                <label class = "button titleButton" for="load">Laden</label>
+            <div id = "title-buttons" class = "input-row">
+                <button id = "save" class = "title-button" onclick = "saveFile()">Opslaan</button>
+                <label class = "button title-button" for="load">Laden</label>
                 <input id="load" type="file" accept="*" hidden>
-                <button id = "saveToPDFButton" class = "titleButton" onclick="savePdf()">PDF opslaan</button>
+                <button id = "saveToPDFButton" class = "title-button" onclick="savePdf()">PDF opslaan</button>
             </div>
             
-            <div id = "fileTitleRow">
+            <div id = "file-title-row">
                 <p>Bestandsnaam:</p>
                 <input id="fileTitle" type="text" value="Kraak de Code">
             </div>
-            <div id = "exerciseCountSelectionRow">
+            <div id = "exercise-count-selection-row">
                 <p>Aantal afbeeldingen:</p>
-                <div class = "input-grid">
-                    <label for="exerciseCountRadio3">3</label>
-                    <input id="exerciseCountRadio3" name = "excerciseCount" type="radio" checked>
-                    <label for="exerciseCountRadio4">4</label>
-                    <input id="exerciseCountRadio4" name = "excerciseCount" type="radio">
-                </div>
+                <label for="exerciseCountRadio3">3</label>
+                <input id="exerciseCountRadio3" name = "excerciseCount" type="radio" checked>
+                <label for="exerciseCountRadio4">4</label>
+                <input id="exerciseCountRadio4" name = "excerciseCount" type="radio">
             </div>
             
             <div id = "exercises">
@@ -341,21 +364,37 @@
                                 <input id="exercise1Bullet1-1" name = "exercise1Bullet1" type="radio">
                                 <input id="exercise1Bullet1-2" name = "exercise1Bullet1" type="radio" checked>
                                 <input id="exercise1Bullet1-3" name = "exercise1Bullet1" type="radio">
+                                <input id="exercise1Bullet1-4" name = "exercise1Bullet1" type="radio">
+                                <div class = "spacer"></div>
+                                <button id = "exercise1-bullet1-subtract" class = "bullet-button">-</button>
+                                <button id = "exercise1-bullet1-add" class = "bullet-button">+</button>
                             </div>
                             <div class = "input-row">
                                 <input id="exercise1Bullet2-1" name = "exercise1Bullet2" type="radio">
                                 <input id="exercise1Bullet2-2" name = "exercise1Bullet2" type="radio" checked>
                                 <input id="exercise1Bullet2-3" name = "exercise1Bullet2" type="radio">
+                                <input id="exercise1Bullet2-4" name = "exercise1Bullet2" type="radio">
+                                <div class = "spacer"></div>
+                                <button id = "exercise1-bullet2-subtract" class = "bullet-button">-</button>
+                                <button id = "exercise1-bullet2-add" class = "bullet-button">+</button>
                             </div>
                             <div class = "input-row">
                                 <input id="exercise1Bullet3-1" name = "exercise1Bullet3" type="radio">
                                 <input id="exercise1Bullet3-2" name = "exercise1Bullet3" type="radio" checked>
                                 <input id="exercise1Bullet3-3" name = "exercise1Bullet3" type="radio">
+                                <input id="exercise1Bullet3-4" name = "exercise1Bullet3" type="radio">
+                                <div class = "spacer"></div>
+                                <button id = "exercise1-bullet3-subtract" class = "bullet-button">-</button>
+                                <button id = "exercise1-bullet3-add" class = "bullet-button">+</button>
                             </div>
                             <div id = "exercise1Bullet4Row" class = "input-row">
                                 <input id="exercise1Bullet4-1" name = "exercise1Bullet4" type="radio">
                                 <input id="exercise1Bullet4-2" name = "exercise1Bullet4" type="radio" checked>
                                 <input id="exercise1Bullet4-3" name = "exercise1Bullet4" type="radio">
+                                <input id="exercise1Bullet4-4" name = "exercise1Bullet4" type="radio">
+                                <div class = "spacer"></div>
+                                <button id = "exercise1-bullet4-subtract" class = "bullet-button">-</button>
+                                <button id = "exercise1-bullet4-add" class = "bullet-button">+</button>
                             </div>
                         </div>
 
@@ -395,21 +434,33 @@
                                 <input id="exercise2Bullet1-1" name = "exercise2Bullet1" type="radio">
                                 <input id="exercise2Bullet1-2" name = "exercise2Bullet1" type="radio" checked>
                                 <input id="exercise2Bullet1-3" name = "exercise2Bullet1" type="radio">
+                                <input id="exercise2Bullet1-4" name = "exercise2Bullet1" type="radio">
+                                <button id = "exercise2-bullet1-subtract" class = "bullet-button">-</button>
+                                <button id = "exercise2-bullet1-add" class = "bullet-button">+</button>
                             </div>
                             <div class = "input-row">
                                 <input id="exercise2Bullet2-1" name = "exercise2Bullet2" type="radio">
                                 <input id="exercise2Bullet2-2" name = "exercise2Bullet2" type="radio" checked>
                                 <input id="exercise2Bullet2-3" name = "exercise2Bullet2" type="radio">
+                                <input id="exercise2Bullet2-4" name = "exercise2Bullet2" type="radio">
+                                <button id = "exercise2-bullet2-subtract" class = "bullet-button">-</button>
+                                <button id = "exercise2-bullet2-add" class = "bullet-button">+</button>
                             </div>
                             <div class = "input-row">
                                 <input id="exercise2Bullet3-1" name = "exercise2Bullet3" type="radio">
                                 <input id="exercise2Bullet3-2" name = "exercise2Bullet3" type="radio" checked>
                                 <input id="exercise2Bullet3-3" name = "exercise2Bullet3" type="radio">
+                                <input id="exercise2Bullet3-4" name = "exercise2Bullet3" type="radio">
+                                <button id = "exercise2-bullet3-subtract" class = "bullet-button">-</button>
+                                <button id = "exercise2-bullet3-add" class = "bullet-button">+</button>
                             </div>
                             <div id = "exercise2Bullet4Row" class = "input-row">
                                 <input id="exercise2Bullet4-1" name = "exercise2Bullet4" type="radio">
                                 <input id="exercise2Bullet4-2" name = "exercise2Bullet4" type="radio" checked>
                                 <input id="exercise2Bullet4-3" name = "exercise2Bullet4" type="radio">
+                                <input id="exercise2Bullet4-4" name = "exercise2Bullet4" type="radio">
+                                <button id = "exercise2-bullet4-subtract" class = "bullet-button">-</button>
+                                <button id = "exercise2-bullet4-add" class = "bullet-button">+</button>
                             </div>
                         </div>
 
@@ -423,7 +474,7 @@
                 </div>
             </div>
         </div>
-        <div id= "previewContainer">
+        <div id= "preview-container">
             <canvas id = "preview">
             </canvas>
         </div>
@@ -434,7 +485,7 @@
             window.addEventListener('load', updateCanvas);
             
             const fileTitle = document.getElementById("fileTitle");
-            const container = document.getElementById("previewContainer");
+            const container = document.getElementById("preview-container");
             const canvas = document.getElementById("preview"); 
             const loadButton = document.getElementById("load");
             const saveToPDFButton = document.getElementById("saveToPDFButton");
@@ -495,9 +546,120 @@
                     image.src = url;
                 }
             }
+
+            /*****************************************************************/ 
+            const exercise1BulletCounts = createBulletCounts(1);
+            const exercise2BulletCounts = createBulletCounts(2);
+            const exerciseBulletCounts = [ exercise1BulletCounts, exercise2BulletCounts ];
             
-            /*****************************************************************/            
+            function createBulletCounts()
+            {
+                return [ 3, 3, 3, 3 ];
+            }
             
+            function updateBulletsOf(exercise, row)
+            {
+                const count = exerciseBulletCounts[exercise - 1][row];
+                for(let i = 0; i < count; ++i)
+                    exerciseBullets[exercise - 1][row][i].style.visibility = '';
+                for(let i = count; i < 4; ++i)
+                    exerciseBullets[exercise - 1][row][i].style.visibility = "hidden";
+            }
+
+            function updateBulletsOfExercise(exercise)
+            {
+                for(let i = 0; i < 4; ++i)
+                    updateBulletsOf(exercise, i);
+            }
+
+            function updateAllBullets()
+            {
+                updateBulletsOfExercise(1);
+                updateBulletsOfExercise(2);
+            }
+
+            /*****************************************************************/
+            const exercise1BulletCountAddElements = getBulletCountAddElements(1);
+            const exercise2BulletCountAddElements = getBulletCountAddElements(2);
+            const exerciseBulletCountAddElements = [ exercise1BulletCountAddElements, exercise2BulletCountAddElements ];
+
+            const exercise1BulletCountSubtractElements = getBulletCountSubtractElements(1);
+            const exercise2BulletCountSubtractElements = getBulletCountSubtractElements(2);
+            const exerciseBulletCountSubtractElements = [ exercise1BulletCountSubtractElements, exercise2BulletCountSubtractElements ];
+
+
+            function getBulletCountAddElements(exercise)
+            {
+                let result = [];
+                for(let i = 1; i <= 4; ++i)
+                    result.push(document.getElementById("exercise" + exercise + "-bullet" + i + "-add"));
+                return result;
+            }
+
+            function getBulletCountSubtractElements(exercise)
+            {
+                let result = [];
+                for(let i = 1; i <= 4; ++i)
+                    result.push(document.getElementById("exercise" + exercise + "-bullet" + i + "-subtract"));
+                return result;
+            }
+
+            function incrementBulletCount(exercise, row)
+            {
+                if (exerciseBulletCounts[exercise - 1][row] < 4)
+                {
+                    exerciseBulletCounts[exercise - 1][row] += 1;
+                    updateBulletsOf(exercise, row);
+                    updateCanvas();
+                }
+            }
+
+            function decrementBulletCount(exercise, row)
+            {
+                if (exerciseBulletCounts[exercise - 1][row] > 1)
+                {
+                    exerciseBulletCounts[exercise - 1][row] -= 1;
+                    updateBulletsOf(exercise, row);
+                    updateCanvas();
+                }
+            }
+
+            function connectToBulletCountAddAndSubtract()
+            {
+                for(let exercise = 1; exercise <= 2; ++exercise)
+                {
+                    for(let i = 0; i < 4; ++i)
+                    {
+                        exerciseBulletCountAddElements[exercise - 1][i].onclick = () => { incrementBulletCount(exercise, i)}
+                        exerciseBulletCountSubtractElements[exercise - 1][i].onclick = () => { decrementBulletCount(exercise, i)}
+                    }
+                }
+            }
+
+            connectToBulletCountAddAndSubtract();
+
+            /*****************************************************************/
+            const exercise1Bullets = getExerciseBullets(1);
+            const exercise2Bullets = getExerciseBullets(2);
+            const exerciseBullets = [ exercise1Bullets, exercise2Bullets ];
+
+            function getExerciseBullets(exercise)
+            {
+                let result = [];
+
+                for(let i = 1; i <= 4; ++i)
+                {
+                    let bullets = [];
+                    for(let j = 1; j <= 4; ++j)
+                    {
+                        bullets.push(document.getElementById("exercise" + exercise + "Bullet"+ i + "-" + j));
+                    }
+                    result.push(bullets);
+                }
+                
+                return result;
+            }
+
             function getExerciseElements(exercise)
             {
                 return {
@@ -513,29 +675,7 @@
                         document.getElementById("exercise" + exercise + "ImageInput3"),
                         document.getElementById("exercise" + exercise + "ImageInput4")
                     ],
-                    bullets:
-                    [
-                        [
-                            document.getElementById("exercise" + exercise + "Bullet1-1"),
-                            document.getElementById("exercise" + exercise + "Bullet1-2"),
-                            document.getElementById("exercise" + exercise + "Bullet1-3"),
-                        ],
-                        [
-                            document.getElementById("exercise" + exercise + "Bullet2-1"),
-                            document.getElementById("exercise" + exercise + "Bullet2-2"),
-                            document.getElementById("exercise" + exercise + "Bullet2-3"),
-                        ],
-                        [
-                            document.getElementById("exercise" + exercise + "Bullet3-1"),
-                            document.getElementById("exercise" + exercise + "Bullet3-2"),
-                            document.getElementById("exercise" + exercise + "Bullet3-3"),
-                        ],
-                        [
-                            document.getElementById("exercise" + exercise + "Bullet4-1"),
-                            document.getElementById("exercise" + exercise + "Bullet4-2"),
-                            document.getElementById("exercise" + exercise + "Bullet4-3"),
-                        ]
-                    ]
+                    bullets: exerciseBullets[exercise - 1]
                 };
             }
             
@@ -556,7 +696,7 @@
                     exerciseElements.imageInputs[i].onchange = updateImageFunction(images[i]);
                     exerciseElements.imageInputs[i].oninput = updateImageFunction(images[i]);
                     
-                    for(let j = 0; j < 3; j += 1)
+                    for(let j = 0; j < 4; j += 1)
                     {
                         exerciseElements.bullets[i][j].onchange = updateCanvas;
                         exerciseElements.bullets[i][j].ininput = updateCanvas;
@@ -575,7 +715,6 @@
             exercise2CheckBox.oninput = updateCanvas();
                         
             /*****************************************************************/
-            
             function containerSize()
             {
             	const computedStyle = getComputedStyle(container);
@@ -622,7 +761,7 @@
             
             function getBullet(exercise, bullet)
             {
-                for(let i = 1; i <= 3; i += 1)
+                for(let i = 1; i <= 4; i += 1)
                 {
                     const bulletElement = document.getElementById("exercise" + exercise + "Bullet" + bullet + "-" + i);
                     if (bulletElement.checked)
@@ -641,6 +780,7 @@
                     "enabled": elements.checkBox.checked,
                     "images": images,
                     "bullets": [ getBullet(exercise, 1), getBullet(exercise, 2), getBullet(exercise, 3), getBullet(exercise, 4) ],
+                    "bulletCount": exerciseBulletCounts[exercise - 1],
                     "borderColor": elements.borderColor.value,
                     "backgroundColor": elements.backgroundColor.value,
                     "accentColor": elements.accentColor.value
@@ -706,6 +846,7 @@
                     "enabled": elements.checkBox.checked,
                     "images": [ toDataUrl(images[0]), toDataUrl(images[1]), toDataUrl(images[2]), toDataUrl(images[3])],
                     "bullets": [ getBullet(exercise, 1), getBullet(exercise, 2), getBullet(exercise, 3), getBullet(exercise, 4) ],
+                    "bulletCounts": exerciseBulletCounts[exercise - 1],
                     "borderColor": elements.borderColor.value,
                     "backgroundColor": elements.backgroundColor.value,
                     "accentColor": elements.accentColor.value
@@ -740,8 +881,9 @@
                 downloadFile(JSON.stringify(createSaveFile()), fileTitle.value + '.kdk');                
             }
             
-            function loadExercise(exerciseElements, exerciseData, exerciseImages)
+            function loadExercise(exerciseElements, exerciseData, exerciseImages, exercise)
             {
+                exerciseBulletCounts[exercise - 1] = exerciseData.bulletCounts || [ 3, 3, 3, 3 ];
                 exerciseElements.titleInput.value = exerciseData.title;
                 exerciseElements.checkBox.checked = exerciseData.enabled;
                 
@@ -768,7 +910,6 @@
             {
                 const count = json.count || 3
                 
-                console.log(json);
                 if (count === 4)
                 {
                     exerciseCountRadio4.checked = true;
@@ -784,8 +925,10 @@
             function loadJson(json)
             {
                 loadCount(json);                
-                loadExercise(exerciseElements[0], json.exercises[0], exerciseImages[0]);
-                loadExercise(exerciseElements[1], json.exercises[1], exerciseImages[1]);
+                loadExercise(exerciseElements[0], json.exercises[0], exerciseImages[0], 1);
+                loadExercise(exerciseElements[1], json.exercises[1], exerciseImages[1], 2);
+                exerciseCountUpdated();
+                updateAllBullets();
                 updateCanvas();
             }
             
@@ -811,6 +954,7 @@
             }
             
             exerciseCountUpdated();
+            updateAllBullets();
             
             (function () {
                 "use strict";

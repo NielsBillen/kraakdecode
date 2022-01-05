@@ -314,7 +314,6 @@ function drawPreview(drawer, exerciseData1, exerciseData2)
     const innerWidth = outerWidth - titleWidth - indent;
     const innerHeight = outerHeight - 2 * indent;
     const imageBoxY = innerY + textBoxIndent;
-    const bulletCount = 3;
     const imageBoxHeight = (innerHeight - 2 * textBoxIndent - imageSeperation) / 2.0;
     
     const textBoxLeftMargin = innerX + textBoxIndent;
@@ -331,6 +330,10 @@ function drawPreview(drawer, exerciseData1, exerciseData2)
         
         const exerciseCount = exerciseData.count || 3;
         const imageBoxWidth = (innerWidth - 2 * textBoxIndent - (exerciseCount - 1) * imageSeperation) / exerciseCount;
+        const imageWidth = imageBoxWidth - 2 * imageInset;
+        const circleSpacing = imageWidth * 0.05;
+        const maxBulletCount = Math.max(...exerciseData.bulletCount);
+        const circleRadius = Math.min((imageBoxHeight - 2 * imageInset) * 0.1, (imageWidth - (maxBulletCount - 1) * circleSpacing) * 0.5 / maxBulletCount);
 
         drawer.drawRectangle(margin, yOffset + margin, outerWidth, outerHeight, 0.01, exerciseData.borderColor, exerciseData.backgroundColor);
         drawer.drawVerticalText(exerciseData.title, margin + titleWidth * 0.5, yOffset + margin + outerHeight * 0.5, "ComicNeue-Bold", 24, exerciseData.borderColor);
@@ -344,10 +347,8 @@ function drawPreview(drawer, exerciseData1, exerciseData2)
             drawer.drawRoundedRectangle(imageBoxX, yOffset + imageBoxY, imageBoxWidth, imageBoxHeight, 0.03, 0.01, exerciseData.borderColor, "white");
 
             // calculate the size of the circles
+            const bulletCount = exerciseData.bulletCount[i];
             const imageX = imageBoxX + imageInset;
-            const imageWidth = imageBoxWidth - 2 * imageInset;
-            const circleSpacing = imageWidth * 0.05;
-            const circleRadius = Math.min((imageBoxHeight - 2 * imageInset) * 0.1, (imageWidth - (bulletCount - 1) * circleSpacing) * 0.5 / bulletCount);
             
             // draw the image
             const imageY = imageBoxY + imageInset + 2 * circleRadius;
