@@ -226,6 +226,11 @@
                 cursor: pointer;
                 font-size: 1rem;
             }
+
+            button[disabled]
+            {
+                background-color: gray;
+            }
             
             .upload-button, .button
             {
@@ -610,6 +615,7 @@
                 {
                     exerciseBulletCounts[exercise - 1][row] += 1;
                     updateBulletsOf(exercise, row);
+                    updateBulletStates(exercise, row);
                     updateCanvas();
                 }
             }
@@ -620,8 +626,23 @@
                 {
                     exerciseBulletCounts[exercise - 1][row] -= 1;
                     updateBulletsOf(exercise, row);
+                    updateBulletStates(exercise, row);
                     updateCanvas();
                 }
+            }
+
+            function updateBulletStates(exercise, row)
+            {
+                const count = exerciseBulletCounts[exercise - 1][row];
+                exerciseBulletCountAddElements[exercise - 1][row].disabled = count === 4;
+                exerciseBulletCountSubtractElements[exercise - 1][row].disabled = count === 1;
+            }
+
+            function updateAllBulletStates(exercise, row)
+            {
+                for(let i = 1; i <= 2; ++i)
+                    for(let j = 0; j < 4; ++j)
+                    updateBulletStates(i, j);
             }
 
             function connectToBulletCountAddAndSubtract()
@@ -929,6 +950,7 @@
                 loadExercise(exerciseElements[1], json.exercises[1], exerciseImages[1], 2);
                 exerciseCountUpdated();
                 updateAllBullets();
+                updateAllBulletStates();
                 updateCanvas();
             }
             
@@ -955,6 +977,7 @@
             
             exerciseCountUpdated();
             updateAllBullets();
+            updateAllBulletStates();
             
             (function () {
                 "use strict";
